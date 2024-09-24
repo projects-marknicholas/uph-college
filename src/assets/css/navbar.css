@@ -1,0 +1,91 @@
+nav{
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+nav .search-all .search-bar{
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  padding: 12px;
+  border-radius: 100px;
+  margin: 1px;
+}
+nav .search-all input{
+  height: 100%;
+  border: none;
+  outline: none;
+  margin: 0 12px;
+  font-size: .9em;
+}
+nav .search-all .search-mic{
+  cursor: pointer;
+}
+nav .search-all .search-bar:focus-within {
+  outline: 1px solid var(--red);
+}
+nav .search-all .search-mic:focus {
+  outline: none;
+}
+nav .controls{
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: 0;
+}
+nav .controls button.export img{
+  margin-right: 8px;
+}
+nav .controls .calendar{
+  position: relative;
+  background-color: var(--red-fade);
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+nav .controls .calendar input{
+  position: absolute;
+  top: 0;
+  left: 0px;
+  height: 100%;
+  width: 20px;
+  border-radius: 8px;
+  opacity: 0;
+  cursor: pointer;
+}
+nav .controls .calendar input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+nav .controls button.export{
+  background-color: var(--red);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border: none;
+  outline: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: .9em;
+  margin-left: 12px;
+}
+nav .controls .profile-pic{
+  height: 40px;
+  width: 40px;
+  background-color: #D9D9D9;
+  border-radius: 50px;
+  margin-left: 12px;
+  display: flex;                  
+  align-items: center;            
+  justify-content: center; 
+}
+nav .controls .profile-pic img{
+  height: 100%;
+  width: 100%;
+  border-radius: 50%; 
+  object-fit: cover;
+}
+.speech-indicator{
+  color: var(--line);
+  font-size: .8em;
+}

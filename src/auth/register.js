@@ -1,0 +1,194 @@
+import React, { useState, useEffect } from "react";
+
+// Router
+import { Link, useNavigate  } from "react-router-dom";
+
+// Components
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+// Assets
+import Logo from "../assets/svg/favicon.svg";
+import Show from "../assets/svg/show.svg";
+import Hide from "../assets/svg/hide.svg";
+
+// API
+import { registerUser } from "../api/auth";
+
+const Register = () => {
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    last_name: "",
+    first_name: "",
+    email: "",
+    password: "",
+    confirm_password: ""
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    // Send form data as JSON
+    const { last_name, first_name, email, password, confirm_password } = formData;
+
+    // This object should match the expected structure in your PHP backend
+    const result = await registerUser({
+      last_name,
+      first_name,
+      email,
+      password,
+      confirm_password,
+    });
+
+
+    // Handle response
+    if (result.status === 'success') {
+      toast.success(result.message);
+      navigate('/');
+    } else {
+      toast.error(result.message);
+    }
+  };
+
+  // Page title
+  useEffect(() => {
+    document.title = 'Register - University of Perpetual Help College Scholarship';
+  }, []);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  }; 
+
+  return (
+    <div className="auth">
+      <ToastContainer />
+      <form className="log-form" onSubmit={handleSubmit}>
+        <div className="header">
+          <Link to="/">
+            <img src={Logo} alt="Logo" />
+          </Link>
+          <h1>Sign up</h1>
+          <p>
+            or <Link to="/">sign in to your account</Link>
+          </p>
+
+          <div className="form-group">
+            <label htmlFor="last_name">
+              <div className="flex-label">
+                <p>Last name <span>*</span></p>
+              </div>
+              <input
+                type="text"
+                id="last_name"
+                name="last_name"
+                value={formData.last_name}
+                onChange={handleChange}
+                autoComplete="off"
+                autoFocus
+              />
+            </label>
+            <br />
+            <label htmlFor="first_name">
+              <div className="flex-label">
+                <p>First name <span>*</span></p>
+              </div>
+              <input
+                type="text"
+                id="first_name"
+                name="first_name"
+                value={formData.first_name}
+                onChange={handleChange}
+                autoComplete="off"
+              />
+            </label>
+            <br />
+            <label htmlFor="email">
+              <div className="flex-label">
+                <p>Email address <span>*</span></p>
+              </div>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                autoComplete="off"
+              />
+            </label>
+            <br />
+            <label htmlFor="password">
+              <div className="flex-label">
+                <p>Password <span>*</span></p>
+                <span>Password must be at least 8 characters.</span>
+              </div>
+              <div className="password-input">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  id="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  autoComplete="off"
+                />
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                >
+                  <img
+                    src={showPassword ? Hide : Show}
+                    alt="Show/Hide"
+                    className="show-hide"
+                  />
+                </button>
+              </div>
+            </label>
+            <label htmlFor="confirm_password">
+              <div className="flex-label">
+                <p>Confirm Password <span>*</span></p>
+              </div>
+              <div className="password-input">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  id="confirm_password"
+                  name="confirm_password"
+                  value={formData.confirm_password}
+                  onChange={handleChange}
+                  autoComplete="off"
+                />
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                >
+                  <img
+                    src={showPassword ? Hide : Show}
+                    alt="Show/Hide"
+                    className="show-hide"
+                  />
+                </button>
+              </div>
+            </label>
+          </div>
+
+          <div className="sign">
+            <button
+              className="sign-m"
+              type="submit"
+            >
+              Register
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default Register;

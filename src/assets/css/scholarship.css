@@ -1,0 +1,128 @@
+.scholarship-type{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.setup-sect .setup-header button.add{
+  margin-left: auto;
+  margin-right: 0;
+  background-color: var(--red);
+  border: none;
+  outline: none;
+  color: var(--white);
+  padding: 8px 20px;
+  font-size: .8em;
+  cursor: pointer;
+  border-radius: 100px;
+  box-shadow: inset 0 0 0 0 var(--red-fade);
+  transition: ease-in-out .5s;
+}
+.setup-sect .setup-header button.add:hover{
+  box-shadow: inset 0 0 0 100px var(--red-fade);
+  color: var(--red);
+  outline: 1px solid var(--red);
+}
+.scholarship-type .item{
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px;
+  transition: ease-in-out .5s;
+}
+.scholarship-type .controls{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.scholarship-type .controls button{
+  margin-left: 8px;
+  padding: 5px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  background-color: rgba(0,0,0,0.1);
+  cursor: pointer;
+}
+.scholarship-type .controls button img{
+  height: 14px;
+}
+.scholarship-type .item:hover{
+  border: 1px solid var(--red);
+}
+.scholarship-type .item h1{
+  color: var(--black);
+  font-size: 1.4em;
+}
+.scholarship-type .item span{
+  font-size: .8em;
+  color: var(--line);
+  font-style: italic;
+}
+.scholarship-type .item .tags{
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+}
+.scholarship-type .item .tags .tag-item{
+  background-color: var(--red);
+  padding: 5px 8px;
+  border-radius: 5px;
+  font-size: .8em;
+  color: var(--white);
+  width: fit-content;
+  text-align: center;
+  margin-right: 8px;
+  text-transform: capitalize;
+}
+.scholarship-type .item .description{
+  margin-bottom: 20px;
+}
+.scholarship-type .item .description,
+.scholarship-type .item .eligibility{
+  font-size: .868em;
+  line-height: 1.5;
+}
+.pop-overlay{
+  width: 500px;
+  margin: auto;
+  margin-top: 50px;
+  background-color: var(--white);
+  padding: 20px;
+  border-radius: 12px;
+}
+.pop-overlay .pop-overlay-header{
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.pop-overlay .pop-overlay-header h3{
+  color: var(--black);
+  text-align: center;
+}
+.pop-overlay .pop-labels{
+  margin-top: 20px;
+}
+.pop-overlay .pop-labels label span{
+  display: inline-block;
+  margin-bottom: 5px;
+  font-size: .8em;
+  color: rgba(0,0,0,0.5);
+}
+.pop-overlay .pop-labels label input{
+  width: calc(100% - 16px);
+  padding: 8px;
+  border: 1px solid var(--line);
+  margin-bottom: 12px;
+  outline: none;
+  border-radius: 8px;
+}
+.pop-overlay .pop-labels label input:focus{
+  outline: 1px solid var(--red);
+}
+.pop-overlay .pop-labels .btn-sub{
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: none;
+  color: var(--white);
+  background-color: var(--red);
+  cursor: pointer;
+}

@@ -1,0 +1,37 @@
+/* Scrollbar */
+body::-webkit-scrollbar {
+  width: 10px;
+}
+body::-webkit-scrollbar-track {
+  background-color: var(--theme-g-btn); 
+  border-radius: 10px;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: var(--red);
+  border-radius: 10px;
+  border: 1px solid var(--line); 
+}
+body::-webkit-scrollbar-thumb:hover {
+  background-color: var(--red);
+}
+
+/* Main section */
+.main-section{
+  padding: 20px;
+  height: calc(100vh - 40px);
+  width: calc(100% - 40px);
+  overflow: auto;
+  display: flex;
+  margin-left: 0px;
+}
+.setup-sect{
+  width: 100%;
+  overflow: auto;
+}
+.setup-sect .setup-header{
+  padding: 20px 0;
+  font-weight: 500;
+  font-size: 1.2em;
+  display: flex;
+  align-items: center;
+}
