@@ -4,15 +4,13 @@ import { Link } from "react-router-dom";
 // Assets
 import ProfileImage from "../../../../assets/svg/profile.svg";
 import ViewSvg from "../../../../assets/svg/view.svg";
-import DeleteSvg from "../../../../assets/svg/decline.svg";
 
 // Components
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2';
 import ViewApplication from "../views/applications";
 
 // API
-import { getScholars, searchScholars, deleteScholars } from "../../../../api/admin";
+import { getScholars, searchScholars } from "../../../../api/admin";
 
 // CSS
 import '../../../../assets/css/table.css';
@@ -67,17 +65,7 @@ const TableScholars = () => {
 
   const capitalize = (name) => {
     return name ? name.charAt(0).toUpperCase() + name.slice(1).toLowerCase() : '';
-  };
-
-  const handleDeleteScholars = async (applicationId) => {
-    const result = await deleteScholars(applicationId);
-    if (result.status === 'success') {
-      fetchData(searchQuery, page); 
-      toast.success(result.message);
-    } else {
-      toast.error(result.message); 
-    }
-  };
+  }; 
 
   const handleViewApplication = (application) => {
     setSelectedApplication(application);
@@ -89,7 +77,6 @@ const TableScholars = () => {
 
   return (
     <>
-      <ToastContainer/>
       <div className="table-holder">
         <div className="table-header">
           <div className="table-btns">
@@ -124,12 +111,13 @@ const TableScholars = () => {
             <thead>
               <tr>
                 <th>Image</th>
-                <th>Full Name</th>
+                <th>Student number</th>
+                <th>Full name</th>
                 <th>Email</th>
                 <th>Course</th>
                 <th>Year</th>
                 <th>GWA</th>
-                <th>Form Type</th>
+                <th>Form type</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -138,6 +126,7 @@ const TableScholars = () => {
                 data.map((row, index) => (
                   <tr key={index}>
                     <td><img src={row.profile || ProfileImage} alt="Profile" /></td>
+                    <td>{row.student_number || ''}</td>
                     <td>{capitalize(row.first_name)} {capitalize(row.middle_name)} {capitalize(row.last_name)}</td>
                     <td>{row.email}</td>
                     <td></td>
@@ -148,10 +137,6 @@ const TableScholars = () => {
                       <button className="view" onClick={() => handleViewApplication(row)}>
                         <img src={ViewSvg} alt="View" />
                         View
-                      </button>
-                      <button className="decline" onClick={() => handleDeleteScholars(row.application_id)}>
-                        <img src={DeleteSvg} alt="View" />
-                        Delete
                       </button>
                     </td>
                   </tr>

@@ -22,6 +22,7 @@ import AdminSettings from './roles/admin/settings';
 import AdminLogout from './validations/logout';
 import AdminActiveAccounts from './roles/admin/active-accounts';
 import AdminScholarshipTypes from './roles/admin/scholarship-types';
+import AdminTypes from './roles/admin/type';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/scholars" element={<AdminScholars />} />
           <Route path="/admin/scholarship-type" element={<AdminScholarshipTypes />} />
+          <Route path="/admin/type/:scholarshipTypeId" element={<AdminTypes />} />
           <Route path="/admin/applications" element={<AdminApplications />} />
           <Route path="/admin/accounts" element={<AdminAccounts />} />
           <Route path="/admin/active-accounts" element={<AdminActiveAccounts />} />

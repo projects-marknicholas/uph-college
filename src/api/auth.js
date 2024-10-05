@@ -1,8 +1,7 @@
 import { endpoints } from './config';
 
 // Components
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2';
 
 // React
 import { useEffect } from 'react';
@@ -28,23 +27,26 @@ export const GoogleLogin = () => {
   
             if (jsonData.status === 'success') {
               const userRole = jsonData.user.role;
+              const userStatus = jsonData.user.status;
 
               if (userRole === 'pending') {
-                toast.error('Your account is not approved yet');
+                Swal.fire('Error!', 'Your account is not approved yet', 'error');
+              } else if(userStatus === 'deactivated') {
+                Swal.fire('Error!', 'Your account has been deactivated', 'error');
               } else{
                 sessionStorage.setItem('user', JSON.stringify(jsonData.user));
                 navigate(`/${userRole}`); 
-                toast.success('Login successful!');
+                Swal.fire('Success!', 'Login Successful!', 'success');
               }
             } else {
-              toast.error(jsonData.message || 'Google Login Failed');
+              // Swal.fire('Error!', jsonData.message || 'Google Login Failed', 'error');
             }
           } catch (e) {
-            toast.error('An error occurred during Google login. Please try again.');
+            Swal.fire('Error!', 'An error occurred during Google login. Please try again.', 'error');
           }
         })
         .catch(error => {
-          toast.error(error);
+          Swal.fire('Error!', error, 'error');
         });
     }
   }, [location]);

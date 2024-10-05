@@ -2,17 +2,16 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "./components/sidebar";
 import Navbar from "./components/navbar";
 import ValidateUser from "../../validations/validate-user";
-import TableScholarshipType from "./components/tables/scholarship-type";
 
-const AdminScholarshipTypes = () => {
+const AdminTypes = () => {
   const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
-    document.title = 'Scholarship Types - Admin';
+    document.title = 'Types - Admin';
   }, []);
 
   const togglePopup = () => {
-    setShowPopup(prev => !prev); // Toggle the state properly
+    setShowPopup(prev => !prev); 
   };
 
   return(
@@ -24,15 +23,13 @@ const AdminScholarshipTypes = () => {
           <Navbar/>
           
           <div className="setup-header">
-            Scholarship Types
+            Types of 
             <button className="add" onClick={togglePopup}>+ Add</button>
           </div>
-
-          <TableScholarshipType showPopup={showPopup} togglePopup={togglePopup}/>
         </div>
       </div>
     </>
   );
 };
 
-export default AdminScholarshipTypes;
+export default AdminTypes;

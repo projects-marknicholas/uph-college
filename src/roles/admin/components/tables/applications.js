@@ -7,8 +7,7 @@ import ViewSvg from "../../../../assets/svg/view.svg";
 import DeclineSvg from "../../../../assets/svg/decline.svg";
 
 // Components
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2';
 import ViewApplication from "../views/applications";
 
 // API
@@ -69,14 +68,30 @@ const TableApplications = () => {
   };
 
   const handleUpdateApplication = async (applicationId, newStatus) => {
-    const result = await updateApplication(applicationId, newStatus);
-    if (result.status === 'success') {
-      fetchData(searchQuery, page); 
-      toast.success(result.message);
-    } else {
-      toast.error(result.message); 
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: `Do you want to update the application status to "${newStatus}"?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, update it!',
+    });
+  
+    if (result.isConfirmed) {
+      try {
+        const response = await updateApplication(applicationId, newStatus);
+        if (response.status === 'success') {
+          fetchData(searchQuery, page); 
+          Swal.fire('Success!', response.message, 'success');
+        } else {
+          Swal.fire('Error!', response.message, 'error');
+        }
+      } catch (error) {
+        Swal.fire('Error!', "An error occurred while updating the application.", 'error');
+      }
     }
-  };
+  };  
 
   const handleViewApplication = (application) => {
     setSelectedApplication(application);
@@ -88,7 +103,6 @@ const TableApplications = () => {
 
   return (
     <>
-      <ToastContainer/>
       <div className="table-holder">
         <div className="table-header">
           <div tabIndex="-1" className="search-bar">
@@ -120,6 +134,7 @@ const TableApplications = () => {
             <thead>
               <tr>
                 <th>Image</th>
+                <th>Student number</th>
                 <th>Full Name</th>
                 <th>Email</th>
                 <th>Course</th>
@@ -134,6 +149,7 @@ const TableApplications = () => {
                 data.map((row, index) => (
                   <tr key={index}>
                     <td><img src={row.profile || ProfileImage} alt="Profile" /></td>
+                    <td>{row.student_number || ''}</td>
                     <td>{capitalize(row.first_name)} {capitalize(row.middle_name)} {capitalize(row.last_name)}</td>
                     <td>{row.email}</td>
                     <td></td>

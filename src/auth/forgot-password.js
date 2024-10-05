@@ -21,8 +21,9 @@ const ForgotPassword = () => {
     <div className="auth">
       <form className="log-form">
         <div className="header">
-          <Link to="/">
-            <img src={Logo} alt="Logo"/>
+          <Link to="/" className="auth">
+            <img src={Logo} alt="Logo" />
+            <h1>UPHSD-Calamba Scholarship System</h1>
           </Link>
           <h1>Forgotten your password?</h1>
           <p><Link to="/">back to login</Link></p>

@@ -14,7 +14,14 @@ export const endpoints = {
   addScholarshipType: `${BASE_URL}/api/v1/scholarship-type`,
   updateScholarshipType: `${BASE_URL}/api/v1/scholarship-type`,
   getScholarshipType: `${BASE_URL}/api/v1/scholarship-type`,
+  updateArchiveStatus: `${BASE_URL}/api/v1/archive`,
   deleteScholarshipType: `${BASE_URL}/api/v1/scholarship-type`,
+
+  addTypes: `${BASE_URL}/api/v1/type`,
+  getTypes: `${BASE_URL}/api/v1/type`,
+  updateTypes: `${BASE_URL}/api/v1/type`,
+
+  getScholarTypeCategory: `${BASE_URL}/api/v1/scholarship-type-category`,
 
   getApplications: `${BASE_URL}/api/v1/applications`,
   searchApplications: `${BASE_URL}/api/v1/applications-search`,
@@ -28,7 +35,7 @@ export const endpoints = {
 
   getAccounts: `${BASE_URL}/api/v1/active-accounts`,
   searchAccounts: `${BASE_URL}/api/v1/active-accounts-search`,
-  deleteAccounts: `${BASE_URL}/api/v1/active-accounts`,
+  updateAccounts: `${BASE_URL}/api/v1/active-accounts`,
 
   getScholars: `${BASE_URL}/api/v1/scholars`,
   searchScholars: `${BASE_URL}/api/v1/scholars-search`,

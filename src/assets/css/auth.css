@@ -27,6 +27,11 @@
   display: block;
   margin: auto;
 }
+.auth .log-form .header a.auth{
+  text-decoration: none;
+  color: var(--red);
+  text-transform: uppercase;
+}
 .auth .log-form .header h1{
   text-align: center;
   font-size: 1.1em;

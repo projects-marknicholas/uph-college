@@ -7,8 +7,7 @@ import AcceptSvg from "../../../../assets/svg/accept.svg";
 import DeclineSvg from "../../../../assets/svg/decline.svg";
 
 // Components
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2';
 
 // API
 import { getAccountApproval, searchAccountApproval, updateAccountApproval, deleteAccountApproval } from "../../../../api/admin";
@@ -77,32 +76,47 @@ const TableAccountApproval = () => {
   const handleUpdateAccountApproval = async (userId) => {
     const selectedRole = roles[userId];
     if (!selectedRole) {
-      toast.error("Please select a role first");
+      Swal.fire('Error!', "Please select a role first", 'error');
       return;
     }
   
     const result = await updateAccountApproval(userId, selectedRole);
     if (result.status === 'success') {
       fetchData(searchQuery, page); 
-      toast.success(result.message);
+      Swal.fire('Success!', result.message, 'success');
     } else {
-      toast.error(result.message); 
+      Swal.fire('Error!', result.message, 'error'); 
     }
   };  
 
   const handleDeleteAccountApproval = async (userId) => {
-    const result = await deleteAccountApproval(userId);
-    if (result.status === 'success') {
-      fetchData(searchQuery, page); 
-      toast.success(result.message);
-    } else {
-      toast.error(result.message); 
+    const confirmationResult = await Swal.fire({
+      title: 'Are you sure?',
+      text: "This action will delete the account approval!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    });
+  
+    if (confirmationResult.isConfirmed) {
+      try {
+        const result = await deleteAccountApproval(userId);
+        if (result.status === 'success') {
+          fetchData(searchQuery, page); 
+          Swal.fire('Success!', result.message, 'success');
+        } else {
+          Swal.fire('Error!', result.message, 'error'); 
+        }
+      } catch (error) {
+        Swal.fire('Error!', "An error occurred while deleting the account approval.", 'error');
+      }
     }
-  }
+  };  
 
   return(
     <>
-      <ToastContainer/>
       <div className="table-holder">
         <div className="table-header">
           <div className="table-btns">
@@ -139,6 +153,7 @@ const TableAccountApproval = () => {
             <thead>
               <tr>
                 <th>Image</th>
+                <th>Student number</th>
                 <th>Full name</th>
                 <th>Email</th>
                 <th>Role</th>
@@ -150,6 +165,7 @@ const TableAccountApproval = () => {
               data.map((row, index) => (
                 <tr key={index}>
                   <td><img src={row.profile || ProfileImage} alt="Profile" /></td>
+                  <td>{row.student_number || ''}</td>
                   <td>{capitalize(row.first_name)} {capitalize(row.middle_name)} {capitalize(row.last_name)}</td>
                   <td>{row.email}</td>
                   <td>

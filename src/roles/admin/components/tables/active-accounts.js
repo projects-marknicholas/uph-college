@@ -7,11 +7,10 @@ import AcceptSvg from "../../../../assets/svg/accept.svg";
 import DeclineSvg from "../../../../assets/svg/decline.svg";
 
 // Components
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2';
 
 // API
-import { getActiveAccount, searchActiveAccount, deleteActiveAccount } from "../../../../api/admin";
+import { getActiveAccount, searchActiveAccount, updateActiveAccount } from "../../../../api/admin";
 
 // CSS
 import '../../../../assets/css/table.css';
@@ -67,19 +66,35 @@ const TableActiveAccounts = () => {
     return name ? name.charAt(0).toUpperCase() + name.slice(1).toLowerCase() : '';
   };
 
-  const handleDeleteActiveAccount = async (userId) => {
-    const result = await deleteActiveAccount(userId);
-    if (result.status === 'success') {
-      fetchData(searchQuery, page); 
-      toast.success(result.message);
-    } else {
-      toast.error(result.message); 
+  const handleUpdateActiveAccount = async (userId, status) => {
+    const actionText = status === '' ? 'activate' : 'deactivated';
+    const confirmationResult = await Swal.fire({
+      title: 'Are you sure?',
+      text: `This action will ${actionText} the account!`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: `Yes, ${actionText} it!`,
+    });
+  
+    if (confirmationResult.isConfirmed) {
+      try {
+        const result = await updateActiveAccount(userId, status);
+        if (result.status === 'success') {
+          fetchData(searchQuery, page); 
+          Swal.fire('Success!', result.message, 'success');
+        } else {
+          Swal.fire('Error!', result.message, 'error');
+        }
+      } catch (error) {
+        Swal.fire('Error!', `An error occurred while trying to ${actionText} the account.`, 'error');
+      }
     }
-  }
+  };  
 
   return(
     <>
-      <ToastContainer/>
       <div className="table-holder">
         <div className="table-header">
           <div tabIndex="-1" className="search-bar">
@@ -113,9 +128,11 @@ const TableActiveAccounts = () => {
             <thead>
               <tr>
                 <th>Image</th>
+                <th>Student number</th>
                 <th>Full name</th>
                 <th>Email</th>
                 <th>Role</th>
+                <th>Status</th>
                 <th>Last Login</th>
                 <th>Date Joined</th>
                 <th>Action</th>
@@ -126,9 +143,11 @@ const TableActiveAccounts = () => {
               data.map((row, index) => (
                 <tr key={index}>
                   <td><img src={row.profile || ProfileImage} alt="Profile" /></td>
+                  <td>{row.student_number || ''}</td>
                   <td>{capitalize(row.first_name)} {capitalize(row.middle_name)} {capitalize(row.last_name)}</td>
                   <td>{row.email}</td>
-                  <td>{row.role}</td>
+                  <td>{row.role || ''}</td>
+                  <td>{row.status }</td>
                   <td>
                     {new Date(row.last_login).toLocaleString('en-US', {
                       year: 'numeric',
@@ -147,9 +166,15 @@ const TableActiveAccounts = () => {
                     })}
                   </td>
                   <td className="action-field">
-                    <button className="decline" onClick={() => handleDeleteActiveAccount(row.user_id)}>
-                      <img src={DeclineSvg} alt="Decline"/> Remove
-                    </button>
+                    {row.status === 'deactivated' ? (
+                      <button className="accept" onClick={() => handleUpdateActiveAccount(row.user_id, '')}>
+                        <img src={AcceptSvg} alt="Activate"/> Activate
+                      </button>
+                    ) : (
+                      <button className="decline" onClick={() => handleUpdateActiveAccount(row.user_id, 'deactivated')}>
+                        <img src={DeclineSvg} alt="Decline"/> Deactivate
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))

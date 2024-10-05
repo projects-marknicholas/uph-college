@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+
+// Components
 import { motion } from 'framer-motion';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2';
+
+// API
 import { addScholarshipType } from '../../../../api/admin';
 
-const PopupScholarshipType = ({ togglePopup, fetchScholarshipTypes  }) => { 
+const PopupScholarshipType = ({ togglePopup, fetchScholarshipTypes }) => { 
   const [scholarshipType, setScholarshipType] = useState('');
   const [category, setCategory] = useState('');
   const [type, setType] = useState('');
@@ -27,14 +30,14 @@ const PopupScholarshipType = ({ togglePopup, fetchScholarshipTypes  }) => {
     try {
       const result = await addScholarshipType(formData);
       if (result.status === 'success') {
-        toast.success('Scholarship type added successfully!');
+        Swal.fire('Success!', 'Scholarship type added successfully!', 'success');
         fetchScholarshipTypes();
         togglePopup(); 
       } else {
-        toast.error(result.message);
+        Swal.fire('Error!', result.message, 'error');
       }
     } catch (err) {
-      toast.error('An error occurred. Please try again.');
+      Swal.fire('Error!', 'An error occurred. Please try again.', 'error');
     } finally {
       setLoading(false);
     }
@@ -68,47 +71,40 @@ const PopupScholarshipType = ({ togglePopup, fetchScholarshipTypes  }) => {
             </label><br />
             <label htmlFor="category">
               <span>Category</span><br />
-              <input
-                type="text"
+              <select
                 id="category"
                 name="category"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                autoComplete="off"
-              />
-            </label><br />
-            <label htmlFor="type">
-              <span>Type</span><br />
-              <input
-                type="text"
-                id="type"
-                name="type"
-                value={type}
-                onChange={(e) => setType(e.target.value)}
-                autoComplete="off"
-              />
+              >
+                <option value=''>Select Category</option>
+                <option value='Internal'>Internal</option>
+                <option value='External'>External</option>
+              </select>
             </label><br />
             <label htmlFor="description">
               <span>Description</span><br />
-              <input
+              <textarea
                 type="text"
                 id="description"
+                rows="5"
                 name="description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 autoComplete="off"
-              />
+              ></textarea>
             </label><br />
             <label htmlFor="eligibility">
               <span>Eligibility</span><br />
-              <input
+              <textarea
                 type="text"
                 id="eligibility"
+                rows="5"
                 name="eligibility"
                 value={eligibility}
                 onChange={(e) => setEligibility(e.target.value)}
                 autoComplete="off"
-              />
+              ></textarea>
             </label><br />
             <button className="btn-sub" type="submit" disabled={loading}>
               {loading ? 'Submitting...' : 'Submit'}

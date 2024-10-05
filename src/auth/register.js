@@ -4,8 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate  } from "react-router-dom";
 
 // Components
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2';
 
 // Assets
 import Logo from "../assets/svg/favicon.svg";
@@ -51,10 +50,10 @@ const Register = () => {
 
     // Handle response
     if (result.status === 'success') {
-      toast.success(result.message);
+      Swal.fire('Success!', result.message, 'success');
       navigate('/');
     } else {
-      toast.error(result.message);
+      Swal.fire('Error!', result.message, 'error');
     }
   };
 
@@ -69,11 +68,11 @@ const Register = () => {
 
   return (
     <div className="auth">
-      <ToastContainer />
       <form className="log-form" onSubmit={handleSubmit}>
         <div className="header">
-          <Link to="/">
+          <Link to="/" className="auth">
             <img src={Logo} alt="Logo" />
+            <h1>UPHSD-Calamba Scholarship System</h1>
           </Link>
           <h1>Sign up</h1>
           <p>

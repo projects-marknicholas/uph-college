@@ -42,19 +42,27 @@ nav .controls .calendar{
   padding: 8px;
   border-radius: 8px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
-nav .controls .calendar input{
-  position: absolute;
-  top: 0;
-  left: 0px;
-  height: 100%;
-  width: 20px;
+nav .controls .calendar .year-semester-dropdown{
+  display: flex;
+  align-items: center;
+}
+nav .controls .calendar .year-semester-dropdown select{
+  outline: none;
+  background-color: var(--white);
+  width: calc(100% - 24px);
+  padding: 5px;
   border-radius: 8px;
-  opacity: 0;
+  border: 1px solid rgba(0,0,0,0.2);
+  font-size: 1em;
+  margin-left: 8px;
+  transition: .2s ease-in-out;
   cursor: pointer;
 }
-nav .controls .calendar input::-webkit-calendar-picker-indicator {
-  cursor: pointer;
+nav .controls .calendar .year-semester-dropdown select:hover{
+  border: 1px solid var(--red);
 }
 nav .controls button.export{
   background-color: var(--red);

@@ -7,6 +7,8 @@ import CalendarSvg from "../../../assets/svg/calendar.svg";
 // Components
 import SearchSpeech from "./speech-recognition";
 import ExportButton from "./export-pdf";
+import Year from "./year";
+import Swal from 'sweetalert2';
 
 // CSS
 import '../../../assets/css/navbar.css';
@@ -17,6 +19,12 @@ const Navbar = () => {
 
   const data = sessionStorage.getItem('user');
   const userData = data ? JSON.parse(data) : null; 
+
+  const handleYearSemesterSelect = (year, semester) => {
+    Swal.fire('Success!', `You selected ${year}, ${semester} sem`, 'success');
+    console.log("Selected Year:", year);
+    console.log("Selected Semester:", semester);
+  };
 
   return(
     <>
@@ -40,11 +48,7 @@ const Navbar = () => {
         <div className="controls">
           <div className="calendar">
             <img src={CalendarSvg}/>
-            <input
-              type="date"
-              id="calendar"
-              name="calendar"
-            />
+            <Year onSelect={handleYearSemesterSelect}/>
           </div>
           <ExportButton targetRef={exportRef}/>
           <div className="profile-pic">

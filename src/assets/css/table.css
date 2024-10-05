@@ -1,3 +1,31 @@
+.add-btn-st{
+  position: absolute;
+  top: 100px;
+  right: 30px;
+  padding: 8px 20px;
+  cursor: pointer;
+  background-color: var(--red);
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  font-size: 1em;
+  color: var(--white);
+}
+.category-select{
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.category-select select{
+  outline: none;
+  background-color: var(--white);
+  width: 100px;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.2);
+  font-size: 1em;
+  cursor: pointer;
+}
 .table-holder .table-header .search-bar{
   display: flex;
   align-items: center;

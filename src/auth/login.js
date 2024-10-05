@@ -5,8 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import '../assets/css/auth.css';
 
 // Components
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2';
 
 // Assets
 import Logo from "../assets/svg/favicon.svg";
@@ -49,10 +48,10 @@ const Login = () => {
     if (result.status === 'success') {
       const userRole = result.user.role;
       sessionStorage.setItem('user', JSON.stringify(result.user));
-      toast.success(result.message);
+      Swal.fire('Success!', result.message, 'success');
       navigate(`/${userRole}`);
     } else {
-      toast.error(result.message);
+      Swal.fire('Error!', result.message, 'error');
     }
   };
 
@@ -73,15 +72,15 @@ const Login = () => {
   return (
     <>
       <GoogleLogin />
-      <ToastContainer/>
       <div className="auth">
         <form className="log-form" onSubmit={handleSubmit}>
           <div className="header">
-            <Link to="/">
+            <Link to="/" className="auth">
               <img src={Logo} alt="Logo" />
+              <h1>UPHSD-Calamba Scholarship System</h1>
             </Link>
-            <h1>Sign in to start your session</h1>
-            <p>or <Link to="/register">sign up for an account</Link></p>
+            <h1>Sign in to your account</h1>
+            <p>or <Link to="/register">Create an account</Link></p>
 
             <div className="form-group">
               <label htmlFor="email">

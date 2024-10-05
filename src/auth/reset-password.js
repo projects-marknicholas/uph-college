@@ -73,8 +73,9 @@ const ResetPassword = () => {
       <ToastContainer />
       <form className="log-form" onSubmit={handleSubmit}>
         <div className="header">
-          <Link to="/">
+          <Link to="/" className="auth">
             <img src={Logo} alt="Logo" />
+            <h1>UPHSD-Calamba Scholarship System</h1>
           </Link>
           <h1>Create your new password</h1>
           <p>or <Link to="/">sign in to your account</Link></p>

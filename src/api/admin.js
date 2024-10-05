@@ -140,6 +140,38 @@ export const updateScholarshipType = async (scholarshipTypeId, formData) => {
   }
 };
 
+export const updateArchiveStatus = async (scholarshipTypeId, archive) => {
+  const securityKeyResponse = await fetchSecurityKey();
+  
+  if (securityKeyResponse.status === 'error') {
+    return { status: 'error', message: 'Failed to fetch API key.' };
+  }
+
+  const apiKey = securityKeyResponse.security_key;
+  const url = `${endpoints.updateArchiveStatus}?stid=${scholarshipTypeId}&archive=${archive}`;
+
+  try {
+    const response = await fetch(url, {
+      method: 'PUT', // Assuming your API uses PUT for updates
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': apiKey,
+      },
+    });
+
+    const data = await response.json();
+
+    if (data.status === 'error') {
+      throw new Error(data.message);
+    }
+
+    return { status: 'success', message: data.message };
+  } catch (error) {
+    console.error('Error during updating archive status:', error);
+    return { status: 'error', message: error.message || 'An error occurred while updating the archive status. Please try again.' };
+  }
+};
+
 export const deleteScholarshipType = async (scholarshipTypeId) => {
   // Fetch the API key first
   const securityKeyResponse = await fetchSecurityKey();
@@ -178,6 +210,153 @@ export const deleteScholarshipType = async (scholarshipTypeId) => {
   } catch (error) {
     console.error('Error during deleting scholarhip type:', error);
     return { status: 'error', message: 'An error occurred while deleting the scholarhip type. Please try again.' };
+  }
+};
+
+// Types
+export const addType = async (userData) => {
+  // Fetch the API key first
+  const securityKeyResponse = await fetchSecurityKey();
+  
+  if (securityKeyResponse.status === 'error') {
+    return { status: 'error', message: 'Failed to fetch API key.' };
+  }
+
+  const apiKey = securityKeyResponse.security_key;
+  const url = `${endpoints.addTypes}`;
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': apiKey,
+      },
+      body: JSON.stringify(userData),
+    });
+
+    const data = await response.json();
+
+    if (data.status === 'success') {
+      return { status: 'success', message: data.message };
+    } else {
+      return { status: 'error', message: data.message };
+    }
+  } catch (error) {
+    console.error('Error during inserting data:', error);
+    return { status: 'error', message: 'An error occurred during inserting data. Please try again.' };
+  }
+};
+
+export const getType = async (type, page) => {
+  // Fetch the API key first
+  const securityKeyResponse = await fetchSecurityKey();
+  
+  if (securityKeyResponse.status === 'error') {
+    return { status: 'error', message: 'Failed to fetch API key.' };
+  }
+
+  const apiKey = securityKeyResponse.security_key;
+  const encodedQuery = encodeURIComponent(type);
+  const url = `${endpoints.getTypes}?type=${encodedQuery}&page=${page}&limit=50`;
+
+  try {
+    if (!url) {
+      throw new Error('API endpoint is not defined');
+    }
+
+    const response = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': apiKey,
+      },
+    });
+
+    const data = await response.json();
+
+    if (data.status === 'error') {
+      throw new Error(data.message);
+    }
+
+    return { status: 'success', types: data.types };
+  } catch (error) {
+    console.error('Error during fetching type:', error);
+    return { status: 'error', message: 'An error occurred while fetching type. Please try again.' };
+  }
+};
+
+export const updateType = async (typeId, formData) => {
+  const securityKeyResponse = await fetchSecurityKey();
+  
+  if (securityKeyResponse.status === 'error') {
+    return { status: 'error', message: 'Failed to fetch API key.' };
+  }
+
+  const apiKey = securityKeyResponse.security_key;
+  const url = `${endpoints.updateTypes}?tid=${typeId}`;
+
+  try {
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': apiKey,
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+
+    if (data.status === 'error') {
+      throw new Error(data.message);
+    }
+
+    return { status: 'success', message: data.message };
+  } catch (error) {
+    console.error('Error during updating type:', error);
+    return { status: 'error', message: error.message || 'An error occurred while updating the type. Please try again.' };
+  }
+};
+
+// Scholarship Type by Category
+export const getScholarshipTypeByCategory = async (category, page) => {
+  // Fetch the API key first
+  const securityKeyResponse = await fetchSecurityKey();
+  
+  if (securityKeyResponse.status === 'error') {
+    return { status: 'error', message: 'Failed to fetch API key.' };
+  }
+
+  const apiKey = securityKeyResponse.security_key;
+  const encodedQuery = encodeURIComponent(category);
+  const url = `${endpoints.getScholarTypeCategory}?category=${encodedQuery}&page=${page}&limit=50`;
+
+  try {
+    if (!url) {
+      throw new Error('API endpoint is not defined');
+    }
+
+    const response = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': apiKey,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+
+    if (data.status === 'error') {
+      throw new Error(data.message);
+    }
+
+    return { status: 'success', data: data.data };
+  } catch (error) {
+    console.error('Error during fetching types:', error);
+    return { status: 'error', message: 'An error occurred while fetching types. Please try again.' };
   }
 };
 
@@ -655,7 +834,7 @@ export const searchActiveAccount = async (query, page) => {
   }
 };
 
-export const deleteActiveAccount = async (userId) => {
+export const updateActiveAccount = async (userId, status) => {
   // Fetch the API key first
   const securityKeyResponse = await fetchSecurityKey();
   
@@ -664,7 +843,7 @@ export const deleteActiveAccount = async (userId) => {
   }
 
   const apiKey = securityKeyResponse.security_key;
-  const url = `${endpoints.deleteAccounts}?uid=${userId}`;
+  const url = `${endpoints.updateAccounts}?uid=${userId}&status=${status}`;
 
   try {
     if (!url) {
@@ -672,7 +851,7 @@ export const deleteActiveAccount = async (userId) => {
     }
 
     const response = await fetch(url, {
-      method: 'DELETE',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': apiKey,
