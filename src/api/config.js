@@ -8,6 +8,7 @@ export const endpoints = {
   forgotPassword: `${BASE_URL}/api/auth/forgot-password`,
   resetPassword: `${BASE_URL}/api/auth/reset-password`,
   googleAuth: `${BASE_URL}/api/auth/google`,  
+  microsoftAuth: `${BASE_URL}/api/auth/microsoft`, 
   securityKey: `${BASE_URL}/api/auth/sk`,  
 
   // Admin
@@ -40,4 +41,9 @@ export const endpoints = {
   getScholars: `${BASE_URL}/api/v1/scholars`,
   searchScholars: `${BASE_URL}/api/v1/scholars-search`,
   deleteScholars: `${BASE_URL}/api/v1/scholars`,
+
+  // Dashboard
+  scholarshipAnalytics: `${BASE_URL}/api/v1/scholar-analytics`,
+  activities: `${BASE_URL}/api/v1/activities`,
+  totals: `${BASE_URL}/api/v1/totals`,
 };

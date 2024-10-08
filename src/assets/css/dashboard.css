@@ -1,0 +1,96 @@
+.dashboard{
+  /* border: 1px solid red; */
+}
+.dashboard .dash-items{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+.dashboard .dash-items .item{
+  border: 1px solid var(--line);
+  padding: 12px;
+  border-radius: 12px;
+  color: var(--gray);
+  cursor: pointer;
+  box-shadow: inset 0 0 0 0 var(--red);
+  transition: ease-in-out .5s;
+  background-color: var(--white);
+}
+.dashboard .dash-items .item:hover{
+  box-shadow: inset 0 1000px 0 0 var(--red);
+  color: var(--white);
+}
+.dashboard .dash-items .item .dash-head,
+.dashboard .dash-items .item .dash-foot{
+  display: flex;
+  align-items: center;
+  font-size: .8em;
+}
+.dashboard .dash-items .item .dash-main{
+  word-wrap: break-word;
+  margin: 12px 0;
+  font-size: 2em;
+  font-weight: bold;
+}
+.dashboard .dash-items .item .dash-head span,
+.dashboard .dash-items .item .dash-foot span{
+  margin-left: auto;
+  margin-right: 0;
+}
+
+
+.dashboard .dash-graph {
+  display: grid;
+  grid-template-columns: 2fr 1fr; 
+  column-gap: 20px;
+  margin-top: 20px;
+}
+.dashboard .dash-graph h2{
+  font-size: 1.2em;
+  font-weight: 500;
+}
+.dashboard .dash-graph .chart-container,
+.dashboard .dash-graph .activities{
+  background-color: var(--white);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  overflow: auto;
+}
+
+.dashboard .dash-graph .activities .activity-list{
+  margin-top: 20px;
+  overflow: auto;
+  max-height: 550px;
+}
+.dashboard .dash-graph .activities .activity-list .dash-act{
+  border: 1px solid var(--line);
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+.dashboard .dash-graph .activities .activity-list .dash-act span{
+  font-size: .7em;
+  background-color: var(--line);
+  color: var(--gray);
+  padding: 5px 8px;
+  border-radius: 5px;
+  display: block;
+  width: fit-content;
+  float: right;
+}
+.dashboard .dash-graph .activities .activity-list .dash-act h3{
+  font-weight: 500;
+  width: 80%;
+}
+.dashboard .dash-graph .activities .activity-list .dash-act .dash-act-foot{
+  display: flex;
+  align-items: center;
+  margin-top: 12px;
+  font-size: .8em;
+  opacity: .5;
+}
+.dashboard .dash-graph .activities .activity-list .dash-act .dash-act-foot p{
+  margin-left: auto;
+  margin-right: 0;
+}

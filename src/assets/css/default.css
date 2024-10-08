@@ -23,6 +23,7 @@ body::-webkit-scrollbar-thumb:hover {
   overflow: auto;
   display: flex;
   margin-left: 0px;
+  background-color: #F9F9F9;
 }
 .setup-sect{
   width: 100%;

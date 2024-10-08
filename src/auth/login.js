@@ -12,9 +12,10 @@ import Logo from "../assets/svg/favicon.svg";
 import Show from "../assets/svg/show.svg";
 import Hide from "../assets/svg/hide.svg";
 import Google from "../assets/svg/google.svg";
+import Microsoft from "../assets/svg/microsoft.png";
 
 // API
-import { GoogleLogin, loginUser } from "../api/auth";
+import { GoogleLogin, MicrosoftLogin, loginUser } from "../api/auth";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -69,9 +70,15 @@ const Login = () => {
     window.location.href = `${url}/api/auth/google`;
   };
 
+  const handleMicrosoftLogin = () => {
+    const url = process.env.REACT_APP_BASE_URL;
+    window.location.href = `${url}/api/auth/microsoft-signin`;
+  };
+
   return (
     <>
       <GoogleLogin />
+      <MicrosoftLogin />
       <div className="auth">
         <form className="log-form" onSubmit={handleSubmit}>
           <div className="header">
@@ -138,6 +145,13 @@ const Login = () => {
                 onClick={handleGoogleLogin}
               >
                 <div><img src={Google} alt="Google" /> Google account</div>
+              </button>
+              <button
+                className="sign-mic"
+                type="button"
+                onClick={handleMicrosoftLogin}
+              >
+                <div><img src={Microsoft} alt="Google" /> Microsoft account</div>
               </button>
             </div>
           </div>

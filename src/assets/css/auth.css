@@ -151,14 +151,28 @@
   border-radius: 8px;
   cursor: pointer;
 }
-.auth .log-form .sign .sign-g div{
+.auth .log-form .sign .sign-mic{
+  width: 100%;
+  background-color: var(--theme-g-btn);
+  border: 1px solid rgba(0,0,0,0.2);
+  color: var(--black);
+  padding: 8px;
+  font-size: 1em;
+  outline: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 12px;
+}
+.auth .log-form .sign .sign-g div,
+.auth .log-form .sign .sign-mic div{
   display: flex;
   align-items: center;
   justify-content: center;
   width: fit-content;
   margin: auto;
 }
-.auth .log-form .sign .sign-g img{
+.auth .log-form .sign .sign-g img,
+.auth .log-form .sign .sign-mic img{
   height: 20px;
   margin-right: 12px;
 }
