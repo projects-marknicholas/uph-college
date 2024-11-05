@@ -80,7 +80,7 @@ const TableScholars = () => {
       <div className="table-holder">
         <div className="table-header">
           <div className="table-btns">
-            <Link to='/admin/scholarship-type'>Scholarship types</Link>
+            {/* <Link to='/admin/scholarship-type'>Scholarship types</Link> */}
           </div>
           <div tabIndex="-1" className="search-bar">
             <svg

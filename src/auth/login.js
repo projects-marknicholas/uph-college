@@ -86,7 +86,7 @@ const Login = () => {
               <img src={Logo} alt="Logo" />
               <h1>UPHSD-Calamba Scholarship System</h1>
             </Link>
-            <h1>Sign in to your account</h1>
+            <h1>Sign in</h1>
             <p>or <Link to="/register">Create an account</Link></p>
 
             <div className="form-group">

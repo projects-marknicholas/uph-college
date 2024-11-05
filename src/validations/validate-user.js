@@ -32,11 +32,11 @@ const ValidateUser = () => {
           ) {
           navigate('/'); // Redirect to home if access is not allowed
         }
-      } else if (userData.role === 'user') {
+      } else if (userData.role === 'student') {
         // Allow user routes
-        if (location.pathname !== '/' && 
-          location.pathname !== '/cart' && 
-          location.pathname !== '/checkout') {
+        if (location.pathname !== '/student' && 
+          location.pathname !== '/student/applications' && 
+          location.pathname !== '/student/account') {
           navigate('/');
         }
       } else {

@@ -144,9 +144,9 @@ const TableScholarshipType = ({ showPopup, togglePopup }) => {
                   <button onClick={() => handleEdit(scholarship)}><img src={EditSvg} alt="Edit" /></button>
                 </div>
                 <h1>{scholarship.scholarship_type}</h1>
-                <span>{new Date(scholarship.created_at).toLocaleDateString()}</span>
+                <span>{new Date(scholarship.created_at).toLocaleDateString()} - {scholarship.category.toLowerCase()}</span>
                 <div className="tags">
-                  <div className="tag-item">{scholarship.category.toLowerCase()}</div>
+                  {/* <div className="tag-item">{scholarship.category.toLowerCase()}</div> */}
                 </div>
                 <div className="description">{scholarship.description}</div>
                 <div className="eligibility">{scholarship.eligibility}</div>

@@ -1,9 +1,13 @@
 import React, {useEffect} from "react";
+import { Link } from "react-router-dom";
 
 // Components
 import Sidebar from "./components/sidebar";
 import Navbar from "./components/navbar";
 import ValidateUser from "../../validations/validate-user";
+
+// CSS
+import '../../assets/css/settings.css';
 
 const AdminSettings = () => {
   useEffect(() => {
@@ -21,6 +25,18 @@ const AdminSettings = () => {
 
           <div className="setup-header">
             Settings
+          </div>
+
+          <div className="settings-choices">
+            <Link to='/admin/scholarship-type' className="settings-item">
+              Scholarship Types
+            </Link>
+            <Link to className="settings-item">
+              Programs
+            </Link>
+            <Link to className="settings-item">
+              Departments
+            </Link>
           </div>
         </div>
       </div>

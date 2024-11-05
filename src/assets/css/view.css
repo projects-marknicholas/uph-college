@@ -11,12 +11,13 @@
   position: fixed;
   top: 25px;
   right: 25px;
-  padding: 8px 12px;
+  padding: 12px 25px;
   outline: none;
   cursor: pointer;
   background-color: var(--white);
   border-radius: 8px;
-  border: 1px solid var(--line)
+  border: 1px solid var(--line);
+  font-size: 1.2em;
 }
 .popup-overlay{
   width: 800px;

@@ -24,6 +24,11 @@ import AdminActiveAccounts from './roles/admin/active-accounts';
 import AdminScholarshipTypes from './roles/admin/scholarship-types';
 import AdminTypes from './roles/admin/type';
 
+// Student
+import StudentHome from './roles/student/home';
+import StudentApplications from './roles/student/applications';
+import StudentAccount from './roles/student/account';
+
 function App() {
   return (
     <>
@@ -44,6 +49,10 @@ function App() {
           <Route path="/admin/active-accounts" element={<AdminActiveAccounts />} />
           <Route path="/admin/settings" element={<AdminSettings />} />
           <Route path="/admin/logout" element={<AdminLogout />} />
+          {/* Student */}
+          <Route path="/student" element={<StudentHome />} />
+          <Route path="/student/applications" element={<StudentApplications />} />
+          <Route path="/student/account" element={<StudentAccount />} />
         </Routes>
       </Router>
     </>

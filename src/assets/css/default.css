@@ -36,3 +36,7 @@ body::-webkit-scrollbar-thumb:hover {
   display: flex;
   align-items: center;
 }
+.container{
+  width: 1140px;
+  margin: auto;
+}

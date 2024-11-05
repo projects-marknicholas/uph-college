@@ -1,0 +1,20 @@
+.settings-choices{
+  border: 1px solid var(--line);
+  width: 500px;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: var(--white);
+}
+.settings-choices a{
+  text-decoration: none;
+  color: var(--black);
+  cursor: pointer;
+  display: block;
+  border-radius: 8px;
+  padding: 12px;
+  transition: ease-in-out .2s;
+}
+.settings-choices a:hover{
+  background-color: var(--red);
+  color: var(--white);
+}
