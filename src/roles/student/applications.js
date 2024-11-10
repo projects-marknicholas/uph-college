@@ -1,6 +1,8 @@
+import { useEffect, useState } from "react";
+
 // Components
-import { useEffect } from "react";
 import StudentNavbar from "./components/navbar";
+import StudentStudentApplications from "./components/tables/student-applications";
 
 const StudentApplications = () => {
 
@@ -10,7 +12,12 @@ const StudentApplications = () => {
 
   return(
     <>
-      <StudentNavbar/>
+      <div className="student-section">
+        <div className="container">
+          <StudentNavbar/>
+          <StudentStudentApplications/>
+        </div>
+      </div>
     </>
   );
 }

@@ -1,5 +1,6 @@
 .student-nav{
   background-color: var(--red);
+  width: calc(100% - 40px);
   padding: 20px;
   margin-top: 12px;
   border-radius: 100px;

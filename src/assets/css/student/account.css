@@ -1,0 +1,51 @@
+.s-account{
+  width: 800px;
+  border: 1px solid var(--line);
+  margin: auto;
+  background-color: var(--white);
+  padding: 20px;
+  border-radius: 12px;
+}
+.s-account .s-header{
+  margin-bottom: 20px;
+}
+.s-account .s-header h1{
+  font-size: 1.4em;
+}
+.s-account .s-header p{
+  color: var(--grey);
+  margin-top: 5px;
+}
+.s-account .sa-input-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+.s-account .sa-input-grid .form-group label span{
+  font-size: .868em;
+  color: var(--gray);
+}
+.s-account .sa-input-grid .form-group label input{
+  width: calc(100% - 24px);
+  padding: 12px;
+  outline: none;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin-top: 6px;
+}
+.s-account .s-sub{
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+.s-account .s-sub button{
+  padding: 8px 12px;
+  background-color: var(--red);
+  color: var(--white);
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: 0;
+}
