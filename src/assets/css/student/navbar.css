@@ -41,6 +41,12 @@
   border-radius: 40px;
   background-color: var(--white);
   margin-right: 8px;
+  overflow: hidden;
+  object-fit: cover;
+}
+.student-nav .right .profile .image-placeholder img{
+  height: 100%;
+  width: 100%;
 }
 .student-nav .right .profile .tooltip {
   position: absolute;

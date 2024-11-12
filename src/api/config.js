@@ -46,4 +46,9 @@ export const endpoints = {
   scholarshipAnalytics: `${BASE_URL}/api/v1/scholar-analytics`,
   activities: `${BASE_URL}/api/v1/activities`,
   totals: `${BASE_URL}/api/v1/totals`,
+
+  // Student
+  studentAccount: `${BASE_URL}/api/v1/student/account`,
+  updateStudentAccount: `${BASE_URL}/api/v1/student/account`,
+  studentScholarshipTypes: `${BASE_URL}/api/v1/student/scholarship-types`,
 };

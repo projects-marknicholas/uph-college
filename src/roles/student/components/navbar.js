@@ -1,5 +1,5 @@
 // Hooks
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 // Assets
@@ -13,11 +13,23 @@ import '../../../assets/css/student/navbar.css';
 
 const StudentNavbar = () => {
   const [showTooltip, setShowTooltip] = useState(false);
+  const [profileImage, setProfileImage] = useState(['']);
 
   // Toggle tooltip visibility
   const toggleTooltip = () => {
     setShowTooltip(prev => !prev);
   };
+
+  useEffect(() => {
+    const user = sessionStorage.getItem('user');
+    if (!user) {
+      console.error("User not found in session storage");
+      return;
+    }
+
+    const userData = JSON.parse(user);
+    setProfileImage(userData.profile || '');
+  }, []);
 
   return(
     <>
@@ -33,7 +45,9 @@ const StudentNavbar = () => {
               <Link to="/student/applications">Applications</Link>
             </div>
             <div className='profile' onClick={toggleTooltip}>
-              <div className='image-placeholder'></div>
+              <div className='image-placeholder'>
+                <img src={profileImage}/>
+              </div>
               <img src={DropdownSvg} alt="Dropdown Icon" />
               {showTooltip && (
                 <div className="tooltip">
