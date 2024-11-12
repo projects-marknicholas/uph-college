@@ -129,9 +129,9 @@ const TableScholars = () => {
                     <td>{row.student_number || ''}</td>
                     <td>{capitalize(row.first_name)} {capitalize(row.middle_name)} {capitalize(row.last_name)}</td>
                     <td>{row.email}</td>
-                    <td></td>
-                    <td></td>
-                    <td>{Math.round(row.gwa * 100) / 100}</td>
+                    <td>{row.course}</td>
+                    <td>{row.year_level}</td>
+                    <td>{row.general_weighted_average}</td>
                     <td>{row.form_type}</td>
                     <td className="action-field">
                       <button className="view" onClick={() => handleViewApplication(row)}>

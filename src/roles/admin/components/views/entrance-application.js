@@ -22,18 +22,18 @@ const EntranceApplication = ({ application }) => {
             <div className="headers">
               <h1>SCHOLARSHIP PROGRAM</h1>
               <h3>ENTRANCE GRANT APPLICATION FORM</h3>
-              <p>{application.form_data.semester} semester</p>
-              <p>Academic Year {application.form_data.academic_year}</p>
+              <p>{application.semester} semester</p>
+              <p>Academic Year {application.academic_year}</p>
             </div>
 
             <div className="entrance-info">
-              <div className="item">Name: {application.form_data.first_name} {application.form_data.middle_name} {application.form_data.last_name}</div>
-              <div className="item">Course: {application.form_data.course}</div>
-              <div className="item">E-mail Address: {application.form_data.email}</div>
-              <div className="item">Contact Number: {application.form_data.contact_number}</div>
-              <div className="item">Honors Received: {application.form_data.honors_received}</div>
-              <div className="item">General Weighted Average (GWA): {application.form_data.gwa}</div>
-              <div className="item">Date Applied: {application.form_data.date_applied}</div>
+              <div className="item">Name: {application.first_name} {application.middle_name} {application.last_name}</div>
+              <div className="item">Course: {application.course}</div>
+              <div className="item">E-mail Address: {application.email}</div>
+              <div className="item">Contact Number: {application.contact_number}</div>
+              <div className="item">Honors Received: {application.honors_received}</div>
+              <div className="item">General Weighted Average (GWA): {application.general_weighted_average}</div>
+              <div className="item">Date Applied: {application.created_at}</div>
             </div>
 
             <div className="privacy">
