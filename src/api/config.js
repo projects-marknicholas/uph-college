@@ -51,4 +51,7 @@ export const endpoints = {
   studentAccount: `${BASE_URL}/api/v1/student/account`,
   updateStudentAccount: `${BASE_URL}/api/v1/student/account`,
   studentScholarshipTypes: `${BASE_URL}/api/v1/student/scholarship-types`,
+  studentTypes: `${BASE_URL}/api/v1/student/type`,
+  studentEntranceApplication: `${BASE_URL}/api/v1/student/entrance-application`,
+  studentApplications: `${BASE_URL}/api/v1/student/applications`,
 };

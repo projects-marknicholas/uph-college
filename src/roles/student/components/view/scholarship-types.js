@@ -1,7 +1,8 @@
+// Main Component File
 import React, { useState, useEffect } from 'react';
 
 // Components
-import StudentTypesPopup from './student-types-pop';
+import StudentTypePopup from './student-types-pop';
 
 // Assets
 import SearchSvg from '../../../../assets/svg/search.svg';
@@ -15,16 +16,19 @@ import { fetchScholarship } from '../../../../api/student';
 
 const StudentScholarshipTypes = () => {
   const [isViewPopup, setViewPopup] = useState(false);
-  const [scholarships, setScholarships] = useState([]); // Store scholarship data
-  const [filter, setFilter] = useState('internal'); // Default filter
+  const [scholarships, setScholarships] = useState([]);
+  const [filter, setFilter] = useState('internal'); 
+  const [selectedScholarship, setSelectedScholarship] = useState(null);
 
   // Function to handle the view popup
-  const handleView = () => {
+  const handleView = (scholarship) => {
+    setSelectedScholarship(scholarship);
     setViewPopup(true);
   };
 
   const closeView = () => {
     setViewPopup(false);
+    setSelectedScholarship(null);
   };
 
   // Fetch scholarships when the component mounts or filter changes
@@ -32,18 +36,18 @@ const StudentScholarshipTypes = () => {
     const getScholarships = async () => {
       const response = await fetchScholarship({ filter });
       if (response.status === 'success') {
-        setScholarships(response.data); // Set the fetched scholarship data
+        setScholarships(response.data);
       } else {
         console.error('Failed to fetch scholarships:', response.message);
       }
     };
 
     getScholarships();
-  }, [filter]); // Re-fetch when the filter changes
+  }, [filter]); 
 
   // Handle filter change
   const handleFilterChange = (e) => {
-    setFilter(e.target.value); // Update the filter value
+    setFilter(e.target.value); 
   };
 
   return (
@@ -77,7 +81,7 @@ const StudentScholarshipTypes = () => {
                   <div className="eligibility">{scholarship.eligibility}</div>
                 </div>
                 <div className="s-apply">
-                  <button onClick={handleView}>
+                  <button onClick={() => handleView(scholarship)}>
                     Apply now <img src={ArrowupSvg} alt="Arrow" />
                   </button>
                 </div>
@@ -89,7 +93,12 @@ const StudentScholarshipTypes = () => {
         </div>
       </div>
 
-      {isViewPopup && <StudentTypesPopup close={closeView} />}
+      {isViewPopup && 
+        <StudentTypePopup 
+          close={closeView} 
+          scholarship={selectedScholarship}
+        />
+      }
     </>
   );
 };

@@ -28,6 +28,7 @@ import AdminTypes from './roles/admin/type';
 import StudentHome from './roles/student/home';
 import StudentApplications from './roles/student/applications';
 import StudentAccount from './roles/student/account';
+import StudentForm from './roles/student/form';
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
           <Route path="/student" element={<StudentHome />} />
           <Route path="/student/applications" element={<StudentApplications />} />
           <Route path="/student/account" element={<StudentAccount />} />
+          <Route path="/student/:studentTypeId/:typeId" element={<StudentForm />} />
         </Routes>
       </Router>
     </>

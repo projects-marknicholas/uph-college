@@ -64,11 +64,8 @@
 }
 .s-scholar-type .s-scholar-grid .item .s-details {
   height: 100px;
-  overflow: hidden;
+  overflow: auto;
   transition: ease-in-out .5s all;
-}
-.s-scholar-type .s-scholar-grid .item .s-details:hover{
-  height: auto;
 }
 .s-scholar-type .s-scholar-grid .item .s-apply{
   display: flex;

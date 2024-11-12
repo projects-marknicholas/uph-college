@@ -1,9 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-// Assets
-import ProfileImage from "../../../../assets/svg/profile.svg";
-
 // Components
 import EntranceApplication from './entrance-application';
 import StudentAssistantship from './student-assistantship';

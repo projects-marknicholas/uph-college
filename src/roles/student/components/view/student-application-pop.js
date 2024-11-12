@@ -1,7 +1,7 @@
 // CSS
 import '../../../../assets/css/student/s-applications.css';
 
-const StudentApplicationPopup = ({close}) => {
+const StudentApplicationPopup = ({ close }) => {
   return(
     <>
       <div className='s-pop-bg'>
