@@ -3,7 +3,8 @@
   height: 100vh;
   width: 100%;
   overflow: auto;
-  background: url('../img/banner.png');
+  /* background: url('../img/banner.png'); */
+  background-color: var(--red);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

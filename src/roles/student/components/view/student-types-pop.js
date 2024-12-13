@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
- 
+
 // CSS
 import '../../../../assets/css/student/s-applications.css';
 
 // API
 import { fetchType } from '../../../../api/student';
 
-const StudentTypePopup = ({ close, scholarship }) => {
+const StudentTypePopup = ({ onClose, scholarship }) => {
   const [studentTypeData, setStudentTypeData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -30,10 +30,12 @@ const StudentTypePopup = ({ close, scholarship }) => {
 
   return (
     <div className="s-pop-bg">
-      <button className='close' onClick={close}>Close</button>
       <div className="s-pop-show">
-        <div className='header'>{scholarship.scholarship_type}'s Types</div>
-        <div className='type-list'>
+        <div className='closing'>
+          <button className="close" onClick={onClose}>Close</button>
+        </div>
+        <div className="header">{scholarship.scholarship_type}'s Types</div>
+        <div className="type-list">
           {loading ? (
             <p>Loading...</p>
           ) : studentTypeData.length > 0 ? (
@@ -52,6 +54,6 @@ const StudentTypePopup = ({ close, scholarship }) => {
       </div>
     </div>
   );
-}
+};
 
 export default StudentTypePopup;

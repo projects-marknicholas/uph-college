@@ -45,7 +45,6 @@ const PopupScholarshipType = ({ togglePopup, fetchScholarshipTypes }) => {
 
   return (
     <div className="view-application">
-      <button className="close-view" onClick={togglePopup}>Close</button>
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -53,6 +52,9 @@ const PopupScholarshipType = ({ togglePopup, fetchScholarshipTypes }) => {
         transition={{ duration: 0.3 }}
       >
         <div className="pop-overlay">
+          <div className='closing'>
+            <button className="close-view" onClick={togglePopup}>Close</button>
+          </div>
           <div className="pop-overlay-header">
             <h3>Add Scholarship Type</h3>
           </div>

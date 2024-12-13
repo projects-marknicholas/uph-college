@@ -23,6 +23,21 @@ import AdminLogout from './validations/logout';
 import AdminActiveAccounts from './roles/admin/active-accounts';
 import AdminScholarshipTypes from './roles/admin/scholarship-types';
 import AdminTypes from './roles/admin/type';
+import AdminDepartment from './roles/admin/departments';
+import AdminPrograms from './roles/admin/programs';
+
+// Dean
+import DeanDashboard from './roles/dean/dashboard';
+import DeanApplications from './roles/dean/applications';
+import DeanReferral from './roles/dean/referral';
+import DeanScholars from './roles/dean/scholars';
+import DeanSettings from './roles/dean/settings';
+
+// Coordinator
+import CoordinatorDashboard from './roles/coordinator/dashboard';
+import CoordinatorScholarship from './roles/coordinator/scholarship';
+import CoordinatorReferral from './roles/coordinator/referral';
+import CoordinatorSettings from './roles/coordinator/settings';
 
 // Student
 import StudentHome from './roles/student/home';
@@ -49,7 +64,19 @@ function App() {
           <Route path="/admin/accounts" element={<AdminAccounts />} />
           <Route path="/admin/active-accounts" element={<AdminActiveAccounts />} />
           <Route path="/admin/settings" element={<AdminSettings />} />
+          <Route path="/admin/departments" element={<AdminDepartment />} />
+          <Route path="/admin/programs" element={<AdminPrograms />} />
           <Route path="/admin/logout" element={<AdminLogout />} />
+          {/* Dean */}
+          <Route path="/dean/" element={<DeanApplications />} />  
+          <Route path="/dean/applications" element={<DeanApplications />} />
+          <Route path="/dean/referral" element={<DeanReferral />} />
+          <Route path="/dean/scholars" element={<DeanScholars />} />
+          <Route path="/dean/settings" element={<DeanSettings />} />
+          {/* Adviser */}
+          <Route path="/adviser/" element={<CoordinatorScholarship />} />
+          <Route path="/adviser/referral" element={<CoordinatorReferral />} />
+          <Route path="/adviser/settings" element={<CoordinatorSettings />} />
           {/* Student */}
           <Route path="/student" element={<StudentHome />} />
           <Route path="/student/applications" element={<StudentApplications />} />

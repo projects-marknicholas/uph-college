@@ -12,6 +12,8 @@ const PopupEditType = ({ togglePopup, scholarship, selectedType, fetchScholarshi
   const [type, setType] = useState('');
   const [description, setDescription] = useState('');
   const [eligibility, setEligibility] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [loading, setLoading] = useState(false);
 
   // Set default values when scholarship prop changes
@@ -21,8 +23,16 @@ const PopupEditType = ({ togglePopup, scholarship, selectedType, fetchScholarshi
       setType(selectedType.type);
       setDescription(selectedType.description);
       setEligibility(selectedType.eligibility);
+      setStartDate(selectedType.start_date);  
+      setEndDate(selectedType.end_date); 
     }
   }, [selectedType]);
+
+  // const formatDate = (date) => {
+  //   if (!date) return '';
+  //   const d = new Date(date);
+  //   return d.toISOString().split('T')[0];
+  // };
   
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -33,6 +43,8 @@ const PopupEditType = ({ togglePopup, scholarship, selectedType, fetchScholarshi
       type,
       description,
       eligibility,
+      start_date: startDate,
+      end_date: endDate
     };
 
     try {
@@ -53,7 +65,6 @@ const PopupEditType = ({ togglePopup, scholarship, selectedType, fetchScholarshi
 
   return (
     <div className="view-application">
-      <button className="close-view" onClick={togglePopup}>Close</button>
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -61,6 +72,9 @@ const PopupEditType = ({ togglePopup, scholarship, selectedType, fetchScholarshi
         transition={{ duration: 0.3 }}
       >
         <div className="pop-overlay">
+          <div className='closing'>
+            <button className="close-view" onClick={togglePopup}>Close</button>
+          </div>
           <div className="pop-overlay-header">
             <h3>Edit for {selectedType.type}</h3>
           </div>
@@ -107,6 +121,24 @@ const PopupEditType = ({ togglePopup, scholarship, selectedType, fetchScholarshi
                 rows="5"
                 autoComplete="off"
               ></textarea>
+            </label><br />
+            <label htmlFor="start_date">
+              <span>Start Date {startDate}</span><br />
+              <input
+                type="date"
+                id="start_date"
+                onChange={(e) => setStartDate(e.target.value)}
+                autoComplete="off"
+              />
+            </label><br />
+            <label htmlFor="end_date">
+              <span>End Date {endDate}</span><br />
+              <input
+                type="date"
+                id="end_date"
+                onChange={(e) => setEndDate(e.target.value)}
+                autoComplete="off"
+              />
             </label><br />
             <button className="btn-sub" type="submit" disabled={loading}>
               {loading ? 'Updating...' : 'Update changes'}

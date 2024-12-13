@@ -107,6 +107,7 @@
   line-height: 1.5;
 }
 .pop-overlay{
+  position: relative;
   width: 500px;
   margin: auto;
   margin-top: 50px;

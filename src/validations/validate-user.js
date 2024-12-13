@@ -28,6 +28,8 @@ const ValidateUser = () => {
           location.pathname !== '/admin/accounts' && 
           location.pathname !== '/admin/active-accounts' &&
           location.pathname !== '/admin/settings' &&
+          location.pathname !== '/admin/departments' &&
+          location.pathname !== '/admin/programs' &&
           location.pathname !== '/admin/logout'
           ) {
           navigate('/'); // Redirect to home if access is not allowed
@@ -37,6 +39,23 @@ const ValidateUser = () => {
         if (location.pathname !== '/student' && 
           location.pathname !== '/student/applications' && 
           location.pathname !== '/student/account') {
+          navigate('/');
+        }
+      } else if (userData.role === 'dean') {
+        // Allow user routes
+        if (location.pathname !== '/dean' && 
+          location.pathname !== '/dean/applications' && 
+          location.pathname !== '/dean/scholars' && 
+          location.pathname !== '/dean/settings' && 
+          location.pathname !== '/dean/referral') {
+          navigate('/');
+        }
+      }  else if (userData.role === 'adviser') {
+        // Allow user routes
+        if (location.pathname !== '/adviser' && 
+          location.pathname !== '/adviser/scholars' && 
+          location.pathname !== '/adviser/settings' &&
+          location.pathname !== '/adviser/referral') {
           navigate('/');
         }
       } else {

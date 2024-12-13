@@ -21,23 +21,23 @@ const ViewApplication = ({ application, onClose }) => {
   const renderFormTypeComponent = () => {
     switch (application.form_type) {
       case 'Entrance Scholarship':
-        return <EntranceApplication application={application} />;
+        return <EntranceApplication application={application} onClose={onClose} />;
       case 'Student Assistanship':
         return <StudentAssistantship application={application} />;
       case `Dean's List`:
-        return <DeansListener application={application} />;
-      case 'Supreme Student Council':
-        return <SupremeStudentCouncil application={application} />;
-      case 'The Perpetualite Archives':
-        return <PerpetualiteArchives application={application} />;
-      case 'College Council Presidents':
-        return <CouncilPresidents application={application} />;
-      case 'Presidential/Board of Directors Scholars':
-        return <PresidentialDirectors application={application} />;
+        return <DeansListener application={application} onClose={onClose} />;
+      case 'SSC Scholars':
+        return <SupremeStudentCouncil application={application} onClose={onClose} />;
+      case 'The Perpetual Archives':
+        return <PerpetualiteArchives application={application} onClose={onClose} />;
+      case 'College Council President':
+        return <CouncilPresidents application={application} onClose={onClose} />;
+      case 'Presidential/Board Director Scholars':
+        return <PresidentialDirectors application={application} onClose={onClose} />;
       case 'Government':
-        return <Government application={application} />;
+        return <Government application={application} onClose={onClose} />;
       case 'Private':
-        return <Private application={application} />;
+        return <Private application={application} onClose={onClose} />;
       default:
         return <div>Form type not recognized.</div>;
     }
@@ -45,7 +45,6 @@ const ViewApplication = ({ application, onClose }) => {
 
   return (
     <div className="view-application">
-      <button className='close-view' onClick={onClose}>Close</button>
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}

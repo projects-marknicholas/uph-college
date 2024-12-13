@@ -118,6 +118,7 @@ const TableScholars = () => {
                 <th>Year</th>
                 <th>GWA</th>
                 <th>Form type</th>
+                <th>Referral by</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -133,6 +134,7 @@ const TableScholars = () => {
                     <td>{row.year_level}</td>
                     <td>{row.general_weighted_average}</td>
                     <td>{row.form_type}</td>
+                    <td>{row.referral_name}</td>
                     <td className="action-field">
                       <button className="view" onClick={() => handleViewApplication(row)}>
                         <img src={ViewSvg} alt="View" />

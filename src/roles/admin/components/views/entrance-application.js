@@ -4,36 +4,75 @@ import React from "react";
 import Logo from "../../../../assets/img/logo.png";
 import ISO from "../../../../assets/img/iso.png";
 
-const EntranceApplication = ({ application }) => {
+const EntranceApplication = ({ application, onClose }) => {
   return(
     <>
       <div className="popup-overlay">
         <div className="entrance-application">
-          <div className="ea-header">
-            <img className="logo" src={Logo}/>
-            <img className="iso" src={ISO}/>
-          </div>
+        <div className='closing'>
+          <button className="close-view" onClick={onClose}>Close</button>
+        </div>
           <div className="content">
-            <div className="serials">
-              <h5>UPHSDCC-<span>SAS-EGA-01</span></h5>
-              <h5>07-15-2024-01</h5>
-            </div>
-
             <div className="headers">
               <h1>SCHOLARSHIP PROGRAM</h1>
               <h3>ENTRANCE GRANT APPLICATION FORM</h3>
-              <p>{application.semester} semester</p>
-              <p>Academic Year {application.academic_year}</p>
             </div>
 
-            <div className="entrance-info">
-              <div className="item">Name: {application.first_name} {application.middle_name} {application.last_name}</div>
-              <div className="item">Course: {application.course}</div>
-              <div className="item">E-mail Address: {application.email}</div>
-              <div className="item">Contact Number: {application.contact_number}</div>
-              <div className="item">Honors Received: {application.honors_received}</div>
-              <div className="item">General Weighted Average (GWA): {application.general_weighted_average}</div>
-              <div className="item">Date Applied: {application.created_at}</div>
+            <div className="inputs">
+              <div className="item">
+                <span>Semester</span>
+                <div className="input">
+                  {application.semester || ''}
+                </div>
+              </div>
+              <div className="item">
+                <span>Academic Year</span>
+                <div className="input">
+                  {application.academic_year || ''}
+                </div>
+              </div>
+              <div className="item">
+                <span>Name</span>
+                <div className="input">
+                  {application.first_name} {application.middle_name} {application.last_name}
+                </div>
+              </div>
+              <div className="item">
+                <span>Course</span>
+                <div className="input">
+                  {application.course}
+                </div>
+              </div>
+              <div className="item">
+                <span>E-mail Address</span>
+                <div className="input">
+                  {application.email}
+                </div>
+              </div>
+              <div className="item">
+                <span>Contact Number</span>
+                <div className="input">
+                  {application.contact_number}
+                </div>
+              </div>
+              <div className="item">
+                <span>Honors Received</span>
+                <div className="input">
+                  {application.honors_received}
+                </div>
+              </div>
+              <div className="item">
+                <span>General Weighted Average (GWA)</span>
+                <div className="input">
+                  {application.general_weighted_average}
+                </div>
+              </div>
+              <div className="item">
+                <span>Date Applied</span>
+                <div className="input">
+                  {application.created_at}
+                </div>
+              </div>
             </div>
 
             <div className="privacy">

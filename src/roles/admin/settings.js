@@ -31,10 +31,10 @@ const AdminSettings = () => {
             <Link to='/admin/scholarship-type' className="settings-item">
               Scholarship Types
             </Link>
-            <Link to className="settings-item">
+            <Link to='/admin/programs' className="settings-item">
               Programs
             </Link>
-            <Link to className="settings-item">
+            <Link to='/admin/departments' className="settings-item">
               Departments
             </Link>
           </div>

@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import ViewApplication from '../view/application';
 
 // Assets
-import DeclineSvg from '../../../../assets/svg/decline.svg';
 import ViewSvg from '../../../../assets/svg/view.svg';
 
 // CSS
@@ -22,7 +21,7 @@ const StudentStudentApplications = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [userId, setUserId] = useState(null);
   const [page, setPage] = useState(1);
-  const [selectedApplication, setSelectedApplication] = useState(null); // To store the selected application for viewing
+  const [selectedApplication, setSelectedApplication] = useState(null); 
 
   const handleView = (application) => {
     setSelectedApplication(application); // Set the selected application
@@ -149,9 +148,6 @@ const StudentStudentApplications = () => {
                         <button className="view" onClick={() => handleView(application)}>
                           <img src={ViewSvg} alt="View" /> View
                         </button>
-                        <button className="decline">
-                          <img src={DeclineSvg} alt="Decline" /> Delete
-                        </button>
                       </td>
                     </tr>
                   ))
@@ -183,7 +179,12 @@ const StudentStudentApplications = () => {
       </div>
 
       {/* View Application Popup */}
-      {isViewPopup && selectedApplication && <ViewApplication application={selectedApplication} onClose={closeView} />}
+      {isViewPopup && selectedApplication && 
+        <ViewApplication 
+          application={selectedApplication} 
+          onClose={closeView} 
+        />
+      }
 
     </>
   );

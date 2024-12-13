@@ -40,3 +40,28 @@ body::-webkit-scrollbar-thumb:hover {
   width: 1240px;
   margin: auto;
 }
+
+
+.search-section{
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.search-section input{
+  width: calc(300px - 24px);
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  outline: none;
+}
+.search-section button{
+  margin-left: 12px;
+  color: var(--white);
+  background-color: var(--red);
+  padding: 12px 24px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+}

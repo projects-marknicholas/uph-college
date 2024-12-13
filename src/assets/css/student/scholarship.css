@@ -31,20 +31,34 @@
 }
 
 .s-scholar-type .s-scholar-grid{
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
   margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
 }
 .s-scholar-type .s-scholar-grid .item{
   background-color: var(--white);
-  border: 1px solid var(--line);
-  border-radius: 12px;
+  border-left: 1px solid var(--line);
+  border-right: 1px solid var(--line);
   padding: 20px;
   transition: ease-in-out .2s;
 }
-.s-scholar-type .s-scholar-grid .item:hover{
-  outline: 1px solid var(--red);
+.s-scholar-type .s-scholar-grid .item ul{
+  list-style: none;
+  margin-top: 20px;
+}
+.s-scholar-type .s-scholar-grid .item ul li.link{
+  cursor: pointer;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: ease-in-out .2s;
+}
+.s-scholar-type .s-scholar-grid .item ul li.link:hover{
+  background-color: var(--red);
+  border: none;
+  color: var(--white);
 }
 .s-scholar-type .s-scholar-grid .item h1{
   font-size: 1.2em;
@@ -86,4 +100,9 @@
 .s-scholar-type .s-scholar-grid .item .s-apply button img{
   height: 8px;
   margin-left: 5px;
+}
+.pdf-view{
+  margin-top: 20px;
+  border-radius: 12px;
+  overflow: hidden;
 }

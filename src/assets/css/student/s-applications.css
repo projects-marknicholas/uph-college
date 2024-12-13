@@ -9,24 +9,22 @@
   width: 100%;
   background-color: var(--rgba);
 }
-.s-pop-bg .close{
-  position: fixed;
-  top: 25px;
-  right: 25px;
-  padding: 12px 25px;
-  outline: none;
-  cursor: pointer;
-  background-color: var(--white);
-  border-radius: 8px;
-  border: 1px solid var(--line);
-  font-size: 1.2em;
-}
 .s-pop-bg .s-pop-show{
+  position: relative;
   background-color: var(--white);
   margin: auto;
   width: 800px;
   margin-top: 50px;
   border-radius: 12px;
+}
+.s-pop-bg .s-pop-show .closing button{
+  background-color: var(--white);
+  border: 1px solid var(--line);
+  outline: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: .868em;
+  border-radius: 8px;
 }
 .s-pop-bg .s-pop-show .header{
   padding: 20px;
@@ -54,4 +52,20 @@
 .s-pop-bg .s-pop-show .type-list a:hover{
   background-color: var(--red);
   color: var(--white);
+}
+.s-pop-bg .s-pop-show .s-pop-desc{
+  padding: 20px;
+}
+.s-pop-bg .s-pop-show .s-pop-desc p{
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+.s-pop-bg .s-pop-show .s-pop-desc button{
+  padding: 8px 12px;
+  background-color: var(--red);
+  color: var(--white);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 8px;
 }

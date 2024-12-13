@@ -1,0 +1,4 @@
+- update account role (nagaupdate lahat ng role) #
+- sa dean academic, sa adviser co curricular (D)
+- auto logout sa student (D)
+- displaying ng student name sa referral

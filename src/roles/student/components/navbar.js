@@ -52,7 +52,7 @@ const StudentNavbar = () => {
               {showTooltip && (
                 <div className="tooltip">
                   <Link to='/student/account'><img src={ManageAccountSvg}/> Manage account</Link>
-                  <Link to='/student/logout'><img src={StudentLogoutSvg}/> Logout</Link>
+                  <Link to='/'><img src={StudentLogoutSvg}/> Logout</Link>
                 </div>
               )}
             </div>

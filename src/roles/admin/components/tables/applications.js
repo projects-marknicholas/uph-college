@@ -141,6 +141,7 @@ const TableApplications = () => {
                 <th>Year</th>
                 <th>GWA</th>
                 <th>Form Type</th>
+                <th>Referred by</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -156,6 +157,7 @@ const TableApplications = () => {
                     <td>{row.year_level}</td>
                     <td>{row.general_weighted_average}</td>
                     <td>{row.form_type}</td>
+                    <td>{row.referral_name}</td>
                     <td className="action-field">
                       <button className="accept" onClick={() => handleUpdateApplication(row.application_id, 'accepted')}>
                         <img src={AcceptSvg} alt="Accept" />

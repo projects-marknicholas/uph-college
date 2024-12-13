@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Components
 import Swal from "sweetalert2";
@@ -6,11 +7,8 @@ import Swal from "sweetalert2";
 // API
 import { insertEntranceApplication } from '../../../../api/student';
 
-// Assets
-import Logo from "../../../../assets/img/logo.png";
-import ISO from "../../../../assets/img/iso.png";
-
 const EntranceApplication = ({ studentTypeId, typeId }) => {
+  const navigate = useNavigate();
   const [currentDate, setCurrentDate] = useState("");
   const [userId, setUserId] = useState(['']);
   const [formData, setFormData] = useState({
@@ -29,6 +27,7 @@ const EntranceApplication = ({ studentTypeId, typeId }) => {
   });
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
+  const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
     const user = sessionStorage.getItem('user');
@@ -39,6 +38,16 @@ const EntranceApplication = ({ studentTypeId, typeId }) => {
 
     const userData = JSON.parse(user);
     setUserId(userData.user_id || '');
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      email_address: userData.email || "",
+      first_name: userData.first_name || "",
+      middle_name: userData.middle_name || "",
+      last_name: userData.last_name || "",
+      department: userData.department || "",
+      program: userData.program || "",
+    }));
   }, []);
 
   useEffect(() => {
@@ -65,8 +74,17 @@ const EntranceApplication = ({ studentTypeId, typeId }) => {
     });
   };
 
+  const handleCheckboxChange = (e) => {
+    setIsChecked(e.target.checked);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!isChecked) {
+      Swal.fire("Warning!", "You must agree to the terms and conditions.", "warning");
+      return;
+    }
 
     // Call the insert function and pass the necessary data
     const response = await insertEntranceApplication({
@@ -93,6 +111,7 @@ const EntranceApplication = ({ studentTypeId, typeId }) => {
         general_weighted_average: "",
       });
       setError(null);
+      navigate('/student/applications');
     } else {
       Swal.fire('Error!', response.message, 'error');
       setMessage(null);
@@ -103,21 +122,18 @@ const EntranceApplication = ({ studentTypeId, typeId }) => {
     <>
       <div className="popup-overlay">
         <div className="entrance-application">
-          <div className="ea-header">
-            <img className="logo" src={Logo} alt="Logo" />
-            <img className="iso" src={ISO} alt="ISO" />
-          </div>
           <div className="content">
-            <div className="serials">
-              <h5>UPHSDCC-<span>SAS-EGA-01</span></h5>
-              <h5>07-15-2024-01</h5>
-            </div>
 
             <div className="headers">
               <h1>SCHOLARSHIP PROGRAM</h1>
               <h3>ENTRANCE GRANT APPLICATION FORM</h3>
-              <p>
+            </div>
+
+            <div className="inputs">
+              <div className="item">
+                <span>Semester</span>
                 <select
+                  className="input"
                   name="semester"
                   value={formData.semester}
                   onChange={handleChange}
@@ -125,24 +141,22 @@ const EntranceApplication = ({ studentTypeId, typeId }) => {
                   <option value="1">1st</option>
                   <option value="2">2nd</option>
                 </select>
-                semester
-              </p>
-              <p>
-                Academic Year
-                <input
+              </div>
+              <div className="item">
+                <span>Academic Year</span>
+                <input 
+                  className="input"
                   type="number"
                   id="academic_year"
                   name="academic_year"
                   value={formData.academic_year}
                   onChange={handleChange}
                 />
-              </p>
-            </div>
-
-            <div className="entrance-info">
+              </div>
               <div className="item">
-                First Name:
+                <span>First Name</span>
                 <input
+                  className="input"
                   type="text"
                   id="first_name"
                   name="first_name"
@@ -151,8 +165,9 @@ const EntranceApplication = ({ studentTypeId, typeId }) => {
                 />
               </div>
               <div className="item">
-                Middle Name:
+                <span>Middle Name</span>
                 <input
+                  className="input"
                   type="text"
                   id="middle_name"
                   name="middle_name"
@@ -161,8 +176,9 @@ const EntranceApplication = ({ studentTypeId, typeId }) => {
                 />
               </div>
               <div className="item">
-                Last Name:
+                <span>Last Name</span>
                 <input
+                  className="input"
                   type="text"
                   id="last_name"
                   name="last_name"
@@ -171,8 +187,9 @@ const EntranceApplication = ({ studentTypeId, typeId }) => {
                 />
               </div>
               <div className="item">
-                Course:
+                <span>Course</span>
                 <input
+                  className="input"
                   type="text"
                   id="program"
                   name="program"
@@ -181,8 +198,9 @@ const EntranceApplication = ({ studentTypeId, typeId }) => {
                 />
               </div>
               <div className="item">
-                E-mail Address:
+                <span>E-mail Address</span>
                 <input
+                  className="input"
                   type="text"
                   id="email_address"
                   name="email_address"
@@ -191,8 +209,9 @@ const EntranceApplication = ({ studentTypeId, typeId }) => {
                 />
               </div>
               <div className="item">
-                Contact Number:
+                <span>Contact Number</span>
                 <input
+                  className="input"
                   type="text"
                   id="contact_number"
                   name="contact_number"
@@ -201,8 +220,9 @@ const EntranceApplication = ({ studentTypeId, typeId }) => {
                 />
               </div>
               <div className="item">
-                Honors Received:
+                <span>Honors Received</span>
                 <input
+                  className="input"
                   type="text"
                   id="honors_received"
                   name="honors_received"
@@ -211,8 +231,9 @@ const EntranceApplication = ({ studentTypeId, typeId }) => {
                 />
               </div>
               <div className="item">
-                General Weighted Average (GWA):
+                <span>General Weighted Average (GWA)</span>
                 <input
+                  className="input"
                   type="text"
                   id="general_weighted_average"
                   name="general_weighted_average"
@@ -221,12 +242,17 @@ const EntranceApplication = ({ studentTypeId, typeId }) => {
                 />
               </div>
               <div className="item">
-                Date Applied: {currentDate}
+                <span>Date Applied</span>
+                <div className="input">{currentDate}</div>
               </div>
             </div>
 
             <div className="privacy">
-              "By signing this <b>entrance grant application form</b> you hereby allow / authorize UPH Calamba
+              <input
+                type="checkbox"
+                checked={isChecked}
+                onChange={handleCheckboxChange}
+              /> "By signing this <b>entrance grant application form</b> you hereby allow / authorize UPH Calamba
               Campus and their authorized personnel to gather and process your personal information (name,
               address, and picture if applicable for documentation use) <b>specifically for scholarship program</b>.
               All information gathered on the said activity will be kept secured and confidential for a period of

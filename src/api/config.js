@@ -42,6 +42,14 @@ export const endpoints = {
   searchScholars: `${BASE_URL}/api/v1/scholars-search`,
   deleteScholars: `${BASE_URL}/api/v1/scholars`,
 
+  getDepartment: `${BASE_URL}/api/v1/department`,
+  addDepartment: `${BASE_URL}/api/v1/department`,
+  updateDepartment: `${BASE_URL}/api/v1/department`,
+
+  getProgram: `${BASE_URL}/api/v1/program`,
+  addProgram: `${BASE_URL}/api/v1/program`,
+  updateProgram: `${BASE_URL}/api/v1/program`,
+
   // Dashboard
   scholarshipAnalytics: `${BASE_URL}/api/v1/scholar-analytics`,
   activities: `${BASE_URL}/api/v1/activities`,
@@ -53,5 +61,35 @@ export const endpoints = {
   studentScholarshipTypes: `${BASE_URL}/api/v1/student/scholarship-types`,
   studentTypes: `${BASE_URL}/api/v1/student/type`,
   studentEntranceApplication: `${BASE_URL}/api/v1/student/entrance-application`,
+  studentDeansListener: `${BASE_URL}/api/v1/student/deans-list`,
+  studentAttachment: `${BASE_URL}/api/v1/student/attachment`,
   studentApplications: `${BASE_URL}/api/v1/student/applications`,
+  studentDepartment: `${BASE_URL}/api/v1/student/department`,
+  studentProgram: `${BASE_URL}/api/v1/student/program`,
+
+  // Dean
+  deanAccount: `${BASE_URL}/api/v1/dean/account`,
+  updateDeanAccount: `${BASE_URL}/api/v1/dean/account`,
+  deanApplications: `${BASE_URL}/api/v1/dean/applications`,
+  deanEntranceApplication: `${BASE_URL}/api/v1/dean/entrance-application`,
+  deanDeansListener: `${BASE_URL}/api/v1/dean/deans-list`,
+  deanReferrals: `${BASE_URL}/api/v1/dean/referrals`,
+  deanUpdateApplications: `${BASE_URL}/api/v1/dean/applications`,
+  deanTypes: `${BASE_URL}/api/v1/dean/types`,
+  deanAttachment: `${BASE_URL}/api/v1/dean/attachment`,
+  deanStudents: `${BASE_URL}/api/v1/dean/students`,
+  deanDepartment: `${BASE_URL}/api/v1/dean/department`,
+  deanProgram: `${BASE_URL}/api/v1/dean/program`,
+
+  // Adviser
+  adviserAccount: `${BASE_URL}/api/v1/adviser/account`,
+  updateAdviserAccount: `${BASE_URL}/api/v1/adviser/account`,
+  adviserTypes: `${BASE_URL}/api/v1/adviser/types`,
+  adviserReferrals: `${BASE_URL}/api/v1/adviser/referrals`,
+  adviserEntranceApplication: `${BASE_URL}/api/v1/adviser/entrance-application`,
+  adviserDeansListener: `${BASE_URL}/api/v1/adviser/deans-list`,
+  adviserAttachment: `${BASE_URL}/api/v1/adviser/attachment`,
+  adviserStudents: `${BASE_URL}/api/v1/adviser/students`,
+  adviserDepartment: `${BASE_URL}/api/v1/adviser/department`,
+  adviserProgram: `${BASE_URL}/api/v1/adviser/program`,
 };

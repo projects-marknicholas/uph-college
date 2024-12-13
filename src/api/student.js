@@ -190,7 +190,74 @@ export const insertEntranceApplication = async ({ uid, stid, tid, formData }) =>
     console.error('Error during inserting data:', error);
     return { status: 'error', message: 'An error occurred during inserting data. Please try again.' };
   }
-}
+};
+
+export const insertFormAttachment = async ({ uid, stid, tid, formData }) => {
+  // Fetch the API key first
+  const securityKeyResponse = await fetchSecurityKey();
+  
+  if (securityKeyResponse.status === 'error') {
+    return { status: 'error', message: 'Failed to fetch API key.' };
+  }
+
+  const apiKey = securityKeyResponse.security_key;
+  const url = `${endpoints.studentAttachment}?uid=${uid}&stid=${stid}&tid=${tid}`;
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': apiKey,
+      },
+      body: formData,
+    });
+
+    const data = await response.json();
+
+    if (data.status === 'success') {
+      return { status: 'success', message: data.message };
+    } else {
+      return { status: 'error', message: data.message };
+    }
+  } catch (error) {
+    console.error('Error during inserting data:', error);
+    return { status: 'error', message: 'An error occurred during inserting data. Please try again.' };
+  }
+};
+
+export const insertDeansListener = async ({ uid, stid, tid, formData }) => {
+  // Fetch the API key first
+  const securityKeyResponse = await fetchSecurityKey();
+  
+  if (securityKeyResponse.status === 'error') {
+    return { status: 'error', message: 'Failed to fetch API key.' };
+  }
+
+  const apiKey = securityKeyResponse.security_key;
+  const url = `${endpoints.studentDeansListener}?uid=${uid}&stid=${stid}&tid=${tid}`;
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': apiKey,
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+
+    if (data.status === 'success') {
+      return { status: 'success', message: data.message };
+    } else {
+      return { status: 'error', message: data.message };
+    }
+  } catch (error) {
+    console.error('Error during inserting data:', error);
+    return { status: 'error', message: 'An error occurred during inserting data. Please try again.' };
+  }
+};
 
 export const fetchApplications = async ({ uid, searchQuery, page }) => {
   // Fetch the API key first
@@ -214,6 +281,94 @@ export const fetchApplications = async ({ uid, searchQuery, page }) => {
         'Authorization': apiKey,
       },
     });
+
+    const data = await response.json();
+
+    if (data.status === 'error') {
+      throw new Error(data.message);
+    }
+
+    return { status: 'success', data: data.data };
+  } catch (error) {
+    console.error('Error during fetching data:', error);
+    return { status: 'error', message: 'An error occurred while fetching data. Please try again.' };
+  }
+};
+
+// Department
+export const getDepartment = async ({ searchQuery, page }) => {
+  // Fetch the API key first
+  const securityKeyResponse = await fetchSecurityKey();
+  
+  if (securityKeyResponse.status === 'error') {
+    return { status: 'error', message: 'Failed to fetch API key.' };
+  }
+
+  const apiKey = securityKeyResponse.security_key;
+
+  const url = searchQuery
+    ? `${endpoints.studentDepartment}?search=${searchQuery}&page=${page}&limit=50`
+    : `${endpoints.studentDepartment}?page=${page}&limit=50`;
+
+  try {
+    if (!url) {
+      throw new Error('API endpoint is not defined');
+    }
+
+    const response = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': apiKey,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+
+    if (data.status === 'error') {
+      throw new Error(data.message);
+    }
+
+    return { status: 'success', data: data.data };
+  } catch (error) {
+    console.error('Error during fetching data:', error);
+    return { status: 'error', message: 'An error occurred while fetching data. Please try again.' };
+  }
+};
+
+// Programs
+export const getProgram = async ({ searchQuery, page }) => {
+  // Fetch the API key first
+  const securityKeyResponse = await fetchSecurityKey();
+  
+  if (securityKeyResponse.status === 'error') {
+    return { status: 'error', message: 'Failed to fetch API key.' };
+  }
+
+  const apiKey = securityKeyResponse.security_key;
+
+  const url = searchQuery
+    ? `${endpoints.studentProgram}?search=${searchQuery}&page=${page}&limit=50`
+    : `${endpoints.studentProgram}?page=${page}&limit=50`;
+
+  try {
+    if (!url) {
+      throw new Error('API endpoint is not defined');
+    }
+
+    const response = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': apiKey,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
 
     const data = await response.json();
 

@@ -4,6 +4,11 @@ import { useParams } from "react-router-dom";
 // Components
 import StudentNavbar from "./components/navbar";
 import EntranceApplication from "./components/view/entrance-application";
+import DeansListener from "./components/view/deans-listener";
+import ThePerpetualArchives from "./components/view/the-perpetual-archives";
+import PresidentialBoardDirectorScholar from "./components/view/presidential-board-director-scholar";
+import CollegeCouncilPresident from "./components/view/college-council-president";
+import SSCScholars from "./components/view/ssc-scholars";
 
 // API
 import { fetchType } from "../../api/student";
@@ -39,11 +44,19 @@ const StudentForm = () => {
 
   useEffect(() => {
     if (typeData) {
-      document.title = `${typeData[0].type} - Student`;
+      const currentType = typeData.find(item => item.type_id === typeId);
+      if (currentType) {
+        document.title = `${currentType.type}`;
+      } else {
+        document.title = 'Form - Student';
+      }
     } else {
       document.title = 'Form - Student';
     }
-  }, [typeData]);
+  }, [typeData, typeId]);  
+
+  // Find the current type by `typeId`
+  const currentType = typeData?.find(item => item.type_id === typeId);
 
   return (
     <>
@@ -54,23 +67,50 @@ const StudentForm = () => {
             <p>Loading...</p>
           ) : error ? (
             <p>Error: {error}</p>
-          ) : (
-            typeData && typeData.length > 0 && typeData[0]?.type === "Entrance Scholarship" ? (
+          ) : currentType ? (
+            currentType.type === "Entrance Scholarship" ? (
               <EntranceApplication 
                 studentTypeId={studentTypeId} 
                 typeId={typeId}     
               />
+            ) : currentType.type === "Dean's List" ? (
+              <DeansListener 
+                studentTypeId={studentTypeId} 
+                typeId={typeId}     
+              />
+            ) : currentType.type === "The Perpetual Archives" ? (
+              <ThePerpetualArchives
+                studentTypeId={studentTypeId} 
+                typeId={typeId}
+              />
+            ) : currentType.type === "Presidential/Board Director Scholars" ? (
+              <PresidentialBoardDirectorScholar
+                studentTypeId={studentTypeId} 
+                typeId={typeId}
+              />
+            ) : currentType.type === "College Council President" ? (
+              <CollegeCouncilPresident
+                studentTypeId={studentTypeId} 
+                typeId={typeId}
+              />
+            ) : currentType.type === "SSC Scholars" ? (
+              <SSCScholars
+                studentTypeId={studentTypeId} 
+                typeId={typeId}
+              />
             ) : (
               <div>
-                <h2>{typeData ? typeData[0].type : 'No Type Found'}</h2>
-                <p>{typeData ? typeData[0].description : 'No description available.'}</p>
+                <h2>{currentType.type || 'No Type Found'}</h2>
+                <p>{currentType.description || 'No description available.'}</p>
               </div>
             )
+          ) : (
+            <p>No data available.</p>
           )}
         </div>
       </div>
     </>
   );
-}
+};
 
 export default StudentForm;

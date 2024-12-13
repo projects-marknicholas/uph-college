@@ -7,19 +7,23 @@
   background-color: var(--rgba);
   overflow: auto;
 }
+.closing{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
 .close-view{
-  position: fixed;
-  top: 25px;
-  right: 25px;
-  padding: 12px 25px;
+  position: relative;
+  padding: 8px;
   outline: none;
   cursor: pointer;
   background-color: var(--white);
   border-radius: 8px;
   border: 1px solid var(--line);
-  font-size: 1.2em;
+  font-size: .868em;
 }
 .popup-overlay{
+  position: relative;
   width: 800px;
   margin: auto;
   margin-top: 50px;
@@ -33,31 +37,19 @@
 .popup-overlay .entrance-application .ea-header{
   display: flex;
   align-items: center;
+  justify-content: center;
   padding-bottom: 12px;
-  border-bottom: 2px solid var(--red);
-}
-.popup-overlay .entrance-application .ea-header img.iso{
-  margin-left: auto;
-  margin-right: 0;
+  background-color: var(--red);
+  width: calc(100% - 24px);
+  padding: 12px;
+  border-radius: 8px;
 }
 .popup-overlay .entrance-application .content{
   margin-top: 12px;
   position: relative;
 }
-.popup-overlay .entrance-application .content .serials{
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 12px;
-  border: 1px solid var(--black);
-  width: fit-content;
-  font-weight: bold;
-}
-.popup-overlay .entrance-application .content .serials span{
-  color: var(--red);
-}
 .popup-overlay .entrance-application .headers{
-  padding-top: 30px;
+  margin-top: 20px;
 }
 .popup-overlay .entrance-application .headers h1{
   text-align: center;
@@ -66,34 +58,80 @@
 .popup-overlay .entrance-application .headers h3{
   text-align: center;
   font-size: 1em;
-  margin-top: 50px;
-  margin-bottom: 20px;
 }
-.popup-overlay .entrance-application .headers p{
-  text-align: center;
-  margin-bottom: 12px;
-}
-.popup-overlay .entrance-application .entrance-info{
-  width: 90%;
+.popup-overlay .entrance-application .inputs,
+.popup-overlay .entrance-application .subjects{
+  margin-top: 30px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
-  margin: auto;
-  margin-top: 50px;
+  width: 100%;
+}
+.popup-overlay .entrance-application .inputs .item,
+.popup-overlay .entrance-application .subjects .item {
+  display: flex;
+  flex-direction: column;
+}
+.popup-overlay .entrance-application .inputs .item span,
+.popup-overlay .entrance-application .subjects .item span{
+  font-size: .868em;
+  display: block;
+}
+.popup-overlay .entrance-application .inputs .item .input,
+.popup-overlay .entrance-application .subjects .item .input{
+  width: calc(100% - 24px);
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin-top: 8px;
+}
+.popup-overlay .entrance-application .inputs .item select.input,
+.popup-overlay .entrance-application .subjects .item select.input{
+  width: 100%;
+}
+.popup-overlay .entrance-application .subjects .remove-button{
+  background-color: var(--danger);
+  color: var(--white);
+  border: none;
+  outline: none;
+  padding: 5px 8px;
+  border-radius: 5px;
+  font-size: .868em;
+  cursor: pointer;
 }
 .popup-overlay .entrance-application .privacy{
-  width: 90%;
+  width: 100%;
   margin: auto;
-  margin-top: 50px;
+  margin-top: 30px;
   font-style: italic;
   font-size: .8em;
 }
 .popup-overlay .entrance-application .form-actions button{
-  margin: 20px;
-  padding: 8px 12px;
-  border: none;
+  margin-top: 20px;
   border-radius: 8px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: var(--white);
+  background-color: var(--red);
+  padding: 8px 12px;
+}
+.items-123-title{
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+.items-123-title h2{
+  font-size: 1.2em;
+}
+.items-123-title button {
+  margin-left: auto;
+  margin-right: 0;
   background-color: var(--red);
   color: var(--white);
+  padding: 8px 12px;
   cursor: pointer;
+  border: none;
+  outline: none;
+  border-radius: 12px;
 }

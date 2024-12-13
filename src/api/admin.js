@@ -752,6 +752,228 @@ export const deleteAccountApproval = async (userId) => {
   }
 };
 
+// Department
+export const getDepartment = async ({ searchQuery, page }) => {
+  // Fetch the API key first
+  const securityKeyResponse = await fetchSecurityKey();
+  
+  if (securityKeyResponse.status === 'error') {
+    return { status: 'error', message: 'Failed to fetch API key.' };
+  }
+
+  const apiKey = securityKeyResponse.security_key;
+
+  const url = searchQuery
+    ? `${endpoints.getDepartment}?search=${searchQuery}&page=${page}&limit=10`
+    : `${endpoints.getDepartment}?page=${page}&limit=10`;
+
+  try {
+    if (!url) {
+      throw new Error('API endpoint is not defined');
+    }
+
+    const response = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': apiKey,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+
+    if (data.status === 'error') {
+      throw new Error(data.message);
+    }
+
+    return { status: 'success', data: data.data };
+  } catch (error) {
+    console.error('Error during fetching data:', error);
+    return { status: 'error', message: 'An error occurred while fetching data. Please try again.' };
+  }
+};
+
+export const addDepartment = async (formData) => {
+  // Fetch the API key first
+  const securityKeyResponse = await fetchSecurityKey();
+  
+  if (securityKeyResponse.status === 'error') {
+    return { status: 'error', message: 'Failed to fetch API key.' };
+  }
+
+  const apiKey = securityKeyResponse.security_key;
+  const url = `${endpoints.addDepartment}`;
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': apiKey,
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+
+    if (data.status === 'success') {
+      return { status: 'success', message: data.message };
+    } else {
+      return { status: 'error', message: data.message };
+    }
+  } catch (error) {
+    console.error('Error during inserting data:', error);
+    return { status: 'error', message: 'An error occurred during inserting data. Please try again.' };
+  }
+};
+
+export const updateDepartment = async (formData, department_id) => {
+  const securityKeyResponse = await fetchSecurityKey();
+
+  if (securityKeyResponse.status === 'error') {
+    return { status: 'error', message: 'Failed to fetch API key.' };
+  }
+
+  const apiKey = securityKeyResponse.security_key;
+  const url = `${endpoints.updateDepartment}?department_id=${department_id}`;
+
+  try {
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': apiKey,
+      },
+      body: JSON.stringify(formData), 
+    });
+
+    const data = await response.json();
+
+    if (data.status === 'error') {
+      throw new Error(data.message);
+    }
+
+    return { status: 'success', message: data.message };
+  } catch (error) {
+    console.error('Error during updating department:', error);
+    return { status: 'error', message: 'An error occurred while updating the department. Please try again.' };
+  }
+};
+
+// Programs
+export const getProgram = async ({ searchQuery, page }) => {
+  // Fetch the API key first
+  const securityKeyResponse = await fetchSecurityKey();
+  
+  if (securityKeyResponse.status === 'error') {
+    return { status: 'error', message: 'Failed to fetch API key.' };
+  }
+
+  const apiKey = securityKeyResponse.security_key;
+
+  const url = searchQuery
+    ? `${endpoints.getProgram}?search=${searchQuery}&page=${page}&limit=10`
+    : `${endpoints.getProgram}?page=${page}&limit=10`;
+
+  try {
+    if (!url) {
+      throw new Error('API endpoint is not defined');
+    }
+
+    const response = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': apiKey,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+
+    if (data.status === 'error') {
+      throw new Error(data.message);
+    }
+
+    return { status: 'success', data: data.data };
+  } catch (error) {
+    console.error('Error during fetching data:', error);
+    return { status: 'error', message: 'An error occurred while fetching data. Please try again.' };
+  }
+};
+
+export const addProgram = async (formData) => {
+  // Fetch the API key first
+  const securityKeyResponse = await fetchSecurityKey();
+  
+  if (securityKeyResponse.status === 'error') {
+    return { status: 'error', message: 'Failed to fetch API key.' };
+  }
+
+  const apiKey = securityKeyResponse.security_key;
+  const url = `${endpoints.addProgram}`;
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': apiKey,
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+
+    if (data.status === 'success') {
+      return { status: 'success', message: data.message };
+    } else {
+      return { status: 'error', message: data.message };
+    }
+  } catch (error) {
+    console.error('Error during inserting data:', error);
+    return { status: 'error', message: 'An error occurred during inserting data. Please try again.' };
+  }
+};
+
+export const updateProgram = async (formData, program_id) => {
+  const securityKeyResponse = await fetchSecurityKey();
+
+  if (securityKeyResponse.status === 'error') {
+    return { status: 'error', message: 'Failed to fetch API key.' };
+  }
+
+  const apiKey = securityKeyResponse.security_key;
+  const url = `${endpoints.updateProgram}?program_id=${program_id}`;
+
+  try {
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': apiKey,
+      },
+      body: JSON.stringify(formData), 
+    });
+
+    const data = await response.json();
+
+    if (data.status === 'error') {
+      throw new Error(data.message);
+    }
+
+    return { status: 'success', message: data.message };
+  } catch (error) {
+    console.error('Error during updating department:', error);
+    return { status: 'error', message: 'An error occurred while updating the department. Please try again.' };
+  }
+};
+
 // Active Accounts
 export const getActiveAccount = async (page) => {
   // Fetch the API key first

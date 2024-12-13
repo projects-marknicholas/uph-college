@@ -63,8 +63,8 @@ const TableScholarshipType = ({ showPopup, togglePopup }) => {
   const handleTypeSelection = (scholarship, selectedType) => {
     const selectedTypeData = scholarship.type_list.find(type => type.type === selectedType);
     if (selectedTypeData) {
-        setSelectedType(selectedTypeData);
-        setTypeSelectionPopupOpen(true);
+      setSelectedType(selectedTypeData);
+      setTypeSelectionPopupOpen(true);
     }
   };
 
@@ -111,7 +111,7 @@ const TableScholarshipType = ({ showPopup, togglePopup }) => {
         Swal.fire('Error!', 'Failed to update scholarship type.', 'error');
       }
     }
-  };  
+  }; 
 
   return (
     <>

@@ -33,6 +33,14 @@
   border-radius: 8px;
   margin-top: 6px;
 }
+.s-account .sa-input-grid .form-group label select{
+  width: calc(100% - 0px);
+  padding: 12px;
+  outline: none;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin-top: 6px;
+}
 .s-account .s-sub{
   display: flex;
   align-items: center;
