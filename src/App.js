@@ -25,6 +25,7 @@ import AdminScholarshipTypes from './roles/admin/scholarship-types';
 import AdminTypes from './roles/admin/type';
 import AdminDepartment from './roles/admin/departments';
 import AdminPrograms from './roles/admin/programs';
+import AdminRefer from './roles/admin/refer';
 
 // Dean
 import DeanDashboard from './roles/dean/dashboard';
@@ -60,6 +61,7 @@ function App() {
           <Route path="/admin/scholars" element={<AdminScholars />} />
           <Route path="/admin/scholarship-type" element={<AdminScholarshipTypes />} />
           <Route path="/admin/type/:scholarshipTypeId" element={<AdminTypes />} />
+          <Route path="/admin/refer" element={<AdminRefer />} />
           <Route path="/admin/applications" element={<AdminApplications />} />
           <Route path="/admin/accounts" element={<AdminAccounts />} />
           <Route path="/admin/active-accounts" element={<AdminActiveAccounts />} />

@@ -13,6 +13,8 @@ const PopupEditType = ({ togglePopup, scholarship, selectedType, fetchScholarshi
   const [description, setDescription] = useState('');
   const [eligibility, setEligibility] = useState('');
   const [startDate, setStartDate] = useState('');
+  const [curriculumYear, setCurriculumYear] = useState('');
+  const [semester, setSemester] = useState('');
   const [endDate, setEndDate] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -25,6 +27,8 @@ const PopupEditType = ({ togglePopup, scholarship, selectedType, fetchScholarshi
       setEligibility(selectedType.eligibility);
       setStartDate(selectedType.start_date);  
       setEndDate(selectedType.end_date); 
+      setCurriculumYear(selectedType.curriculum_year || '');
+      setSemester(selectedType.semester || '');
     }
   }, [selectedType]);
 
@@ -44,6 +48,8 @@ const PopupEditType = ({ togglePopup, scholarship, selectedType, fetchScholarshi
       description,
       eligibility,
       start_date: startDate,
+      curriculum_year: curriculumYear,
+      semester: semester,
       end_date: endDate
     };
 
@@ -113,7 +119,7 @@ const PopupEditType = ({ togglePopup, scholarship, selectedType, fetchScholarshi
               ></textarea>
             </label><br />
             <label htmlFor="eligibility">
-              <span>Eligibility</span><br />
+              <span>Qualifications</span><br />
               <textarea
                 id="eligibility"
                 value={eligibility}
@@ -139,6 +145,44 @@ const PopupEditType = ({ togglePopup, scholarship, selectedType, fetchScholarshi
                 onChange={(e) => setEndDate(e.target.value)}
                 autoComplete="off"
               />
+            </label><br />
+            <label htmlFor="curriculum_year">
+              <span>Curriculum Year</span><br />
+              <select
+                id="curriculum_year"
+                autoComplete="off"
+                value={curriculumYear}
+                onChange={(event) => {
+                  const selectedYear = parseInt(event.target.value, 10);
+                  setCurriculumYear(`${selectedYear}-${selectedYear + 1}`);
+                }}
+              >
+                <option value="" disabled>
+                  Select a year
+                </option>
+                {Array.from({ length: 20 }, (_, index) => {
+                  const year = new Date().getFullYear() - index;
+                  const formattedYear = `${year}-${year + 1}`; 
+                  return (
+                    <option key={year} value={formattedYear}>
+                      {formattedYear}
+                    </option>
+                  );
+                })}
+              </select>
+            </label><br />
+            <label htmlFor="semester">
+              <span>Semester</span><br />
+              <select
+                id="semester"
+                autoComplete="off"
+                value={semester}
+                onChange={(event) => setSemester(event.target.value)}
+              >
+                <option value="" disabled>Select a semester</option>
+                <option value="1">1st Semester</option>
+                <option value="2">2nd Semester</option>
+              </select>
             </label><br />
             <button className="btn-sub" type="submit" disabled={loading}>
               {loading ? 'Updating...' : 'Update changes'}

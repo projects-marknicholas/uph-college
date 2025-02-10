@@ -27,7 +27,6 @@ const StudentStudentAccount = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Retrieve and parse the user data from session storage
       const user = sessionStorage.getItem('user');
       if (!user) {
         console.error("User not found in session storage");
@@ -37,7 +36,6 @@ const StudentStudentAccount = () => {
       const userData = JSON.parse(user);
 
       try {
-        // Fetch user account data
         const response = await userAccount({ uid: userData.user_id });
         if (response.status === 'success') {
           const user = response.user[0];
@@ -51,20 +49,16 @@ const StudentStudentAccount = () => {
             department: user.department || '',
             program: user.program || '',
           });
+
+          // Fetch programs based on user department
+          fetchPrograms(user.department);
         } else {
           console.error(response.message);
         }
 
-        // Fetch department data
         const departmentResponse = await getDepartment({ searchQuery: '', page: 1 });
         if (departmentResponse.status === 'success') {
           setDepartments(departmentResponse.data);
-        }
-
-        // Fetch program data
-        const programResponse = await getProgram({ searchQuery: '', page: 1 });
-        if (programResponse.status === 'success') {
-          setPrograms(programResponse.data);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -74,15 +68,31 @@ const StudentStudentAccount = () => {
     fetchData();
   }, []);
 
-  const handleInputChange = (e) => {
+  const fetchPrograms = async (department) => {
+    try {
+      const programResponse = await getProgram({ searchQuery: department, page: 1 });
+      if (programResponse.status === 'success') {
+        setPrograms(programResponse.data);
+      } else {
+        setPrograms([]);
+      }
+    } catch (error) {
+      console.error("Error fetching programs:", error);
+    }
+  };
+
+  const handleInputChange = async (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
+
+    // Fetch programs when department changes
+    if (name === 'department') {
+      fetchPrograms(value);
+    }
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-
-    // Retrieve and parse the user data from session storage
     const user = sessionStorage.getItem('user');
     if (!user) {
       console.error("User not found in session storage");
@@ -100,7 +110,7 @@ const StudentStudentAccount = () => {
         Swal.fire('Error!', response.message, 'error');
       }
     } catch (error) {
-      Swal.fire('Error!', "Error updating user account:", error, 'error');
+      Swal.fire('Error!', "Error updating user account", 'error');
     }
   };
 
@@ -121,7 +131,7 @@ const StudentStudentAccount = () => {
                   type="text"
                   id="first_name"
                   name="first_name"
-                  defaultValue={formData.first_name}
+                  value={formData.first_name}
                   onChange={handleInputChange}
                 />
               </label>
@@ -133,7 +143,7 @@ const StudentStudentAccount = () => {
                   type="text"
                   id="middle_name"
                   name="middle_name"
-                  defaultValue={formData.middle_name}
+                  value={formData.middle_name}
                   onChange={handleInputChange}
                 />
               </label>
@@ -145,7 +155,7 @@ const StudentStudentAccount = () => {
                   type="text"
                   id="last_name"
                   name="last_name"
-                  defaultValue={formData.last_name}
+                  value={formData.last_name}
                   onChange={handleInputChange}
                 />
               </label>
@@ -157,7 +167,7 @@ const StudentStudentAccount = () => {
                   type="text"
                   id="student_number"
                   name="student_number"
-                  defaultValue={formData.student_number}
+                  value={formData.student_number}
                   onChange={handleInputChange}
                 />
               </label>
@@ -169,7 +179,7 @@ const StudentStudentAccount = () => {
                   type="text"
                   id="place_of_birth"
                   name="place_of_birth"
-                  defaultValue={formData.place_of_birth}
+                  value={formData.place_of_birth}
                   onChange={handleInputChange}
                 />
               </label>
@@ -181,7 +191,7 @@ const StudentStudentAccount = () => {
                   type="date"
                   id="date_of_birth"
                   name="date_of_birth"
-                  defaultValue={formData.date_of_birth}
+                  value={formData.date_of_birth}
                   onChange={handleInputChange}
                 />
               </label>

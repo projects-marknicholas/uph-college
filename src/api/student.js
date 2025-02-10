@@ -135,7 +135,39 @@ export const fetchType = async ({ stid }) => {
   }
 
   const apiKey = securityKeyResponse.security_key;
-  const url = `${endpoints.studentTypes}?stid=${stid}`;
+  const url = `${endpoints.studentType}?stid=${stid}`;
+
+  try{
+    const response = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': apiKey,
+      },
+    });
+
+    const data = await response.json();
+
+    if (data.status === 'error') {
+      throw new Error(data.message);
+    }
+
+    return { status: 'success', data: data.data };
+  } catch (error) {
+    console.error('Error during fetching data:', error);
+    return { status: 'error', message: 'An error occurred while fetching data. Please try again.' };
+  }
+}
+
+export const fetchTypes = async ({ tid }) => {
+  // Fetch the API key first
+  const securityKeyResponse = await fetchSecurityKey();
+  
+  if (securityKeyResponse.status === 'error') {
+    return { status: 'error', message: 'Failed to fetch API key.' };
+  }
+
+  const apiKey = securityKeyResponse.security_key;
+  const url = `${endpoints.studentTypes}?tid=${tid}`;
 
   try{
     const response = await fetch(url, {

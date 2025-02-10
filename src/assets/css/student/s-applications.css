@@ -56,6 +56,15 @@
 .s-pop-bg .s-pop-show .s-pop-desc{
   padding: 20px;
 }
+.s-pop-bg .s-pop-show .s-pop-desc small{
+  background-color: var(--red);
+  padding: 5px 12px;
+  font-size: 1em;
+  display: block;
+  width: fit-content;
+  color: var(--white);
+  border-radius: 5px;
+}
 .s-pop-bg .s-pop-show .s-pop-desc p{
   margin-bottom: 20px;
   line-height: 1.5;

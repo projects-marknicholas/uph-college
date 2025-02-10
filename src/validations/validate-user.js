@@ -24,6 +24,7 @@ const ValidateUser = () => {
           location.pathname !== '/admin/scholars' && 
           location.pathname !== '/admin/scholarship-type' && 
           location.pathname !== `/admin/type/${scholarshipTypeId}` && // Use extracted scholarshipTypeId
+          location.pathname !== '/admin/refer' && 
           location.pathname !== '/admin/applications' && 
           location.pathname !== '/admin/accounts' && 
           location.pathname !== '/admin/active-accounts' &&

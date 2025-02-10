@@ -5,6 +5,8 @@ import { Link, useLocation } from "react-router-dom";
 import Logo from "../../../assets/svg/favicon.svg";
 import LogoutSvg from "../../../assets/svg/logout.svg";
 import ScholarsSvg from "../../../assets/svg/scholars.svg";
+import ReferSvg from "../../../assets/svg/refer.svg";
+import ReferActiveSvg from "../../../assets/svg/refer-active.svg";
 import ApplicationsSvg from "../../../assets/svg/applications.svg";
 import SettingsSvg from "../../../assets/svg/settings.svg";
 import AccountsSvg from "../../../assets/svg/accounts.svg";
@@ -53,6 +55,12 @@ const Sidebar = () => {
               <Link to="/admin/applications" className={path === "/admin/applications" ? "active" : ""}>
                 <img src={getIcon("/admin/applications", ApplicationsSvg, ApplicationsActiveSvg)} alt="Applications" />
                 <span>Applications</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/admin/refer" className={path === "/admin/refer" ? "active" : ""}>
+                <img src={getIcon("/admin/refer", ReferSvg, ReferActiveSvg)} alt="Refer" />
+                <span>Refer</span>
               </Link>
             </li>
             <li>

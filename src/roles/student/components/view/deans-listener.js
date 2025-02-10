@@ -3,15 +3,18 @@ import { useNavigate } from "react-router-dom";
 
 // Components
 import Swal from "sweetalert2";
+import DeansListFile from "./form/dl-file";
 
 // API
-import { insertDeansListener } from '../../../../api/student';
+import { insertDeansListener, fetchTypes } from '../../../../api/student';
 
 const DeansListener = ({ studentTypeId, typeId }) => {
   const navigate = useNavigate();
   const [subjects, setSubjects] = useState([]);
   const [currentDate, setCurrentDate] = useState("");
   const [userId, setUserId] = useState(['']);
+  const [curriculumYears, setCurriculumYears] = useState([]);
+  const [semesters, setSemesters] = useState([]);
   const [formData, setFormData] = useState({
     semester: "",
     academic_year: "",
@@ -26,7 +29,8 @@ const DeansListener = ({ studentTypeId, typeId }) => {
   });
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(true);
+  const [isUploadPopupOpen, setIsUploadPopupOpen] = useState(false);
 
   // Getting the default user data
   useEffect(() => {
@@ -92,6 +96,35 @@ const DeansListener = ({ studentTypeId, typeId }) => {
     updatedSubjects.splice(index, 1);
     setSubjects(updatedSubjects);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!typeId) return; 
+  
+      try {
+        const response = await fetchTypes({ tid: typeId });
+  
+        if (response.status === "success") {
+          setCurriculumYears(response.data || []);
+          setSemesters(response.data || []);
+          // Set the default academic_year to the first item in curriculumYears
+          if (response.data && response.data.length > 0) {
+            setFormData((prevFormData) => ({
+              ...prevFormData,
+              academic_year: response.data[0].curriculum_year,
+              semester: response.data[0].semester,
+            }));
+          }
+        } else {
+          console.error("Failed to fetch curriculum years:", response.message);
+        }
+      } catch (error) {
+        console.error("Error fetching curriculum years:", error);
+      }
+    };
+  
+    fetchData();
+  }, [typeId]); 
 
   // Form data
   const handleChange = (e) => {
@@ -166,25 +199,41 @@ const DeansListener = ({ studentTypeId, typeId }) => {
           <div className="inputs">
             <div className="item">
               <span>Semester</span>
-              <select 
-                className="input" 
+              <select
+                className="input"
                 name="semester"
                 value={formData.semester}
                 onChange={handleChange}
+                disabled
               >
-                <option value="1">1st</option>
-                <option value="2">2nd</option>
+                {semesters.length ? (
+                  semesters.map((sem) => (
+                    <option key={sem.semester} value={sem.semester}>
+                      {sem.semester === '1' ? "1st Semester" : sem.semester === '2' ? "2nd Semester" : sem.semester}
+                    </option>
+                  ))
+                ) : (
+                  <option disabled>No available semesters</option>
+                )}
               </select>
             </div>
             <div className="item">
               <span>Academic Year</span>
-              <input 
-                className="input" 
-                type="number" 
-                name="academic_year" 
+              <select 
+                className="input"
+                id="academic_year"
+                name="academic_year"
                 value={formData.academic_year}
                 onChange={handleChange}
-              />
+                disabled
+              > 
+                <option disabled>Select Academic Year</option>
+                {curriculumYears.map((year, index) => (
+                  <option key={index} value={year.curriculum_year}>
+                    {year.curriculum_year}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="item">
               <span>First Name</span>
@@ -194,6 +243,8 @@ const DeansListener = ({ studentTypeId, typeId }) => {
                 name="first_name" 
                 value={formData.first_name}
                 onChange={handleChange}
+                disabled
+                readOnly
               />
             </div>
             <div className="item">
@@ -204,6 +255,8 @@ const DeansListener = ({ studentTypeId, typeId }) => {
                 name="middle_name" 
                 value={formData.middle_name}
                 onChange={handleChange}
+                disabled
+                readOnly
               />
             </div>
             <div className="item">
@@ -214,6 +267,8 @@ const DeansListener = ({ studentTypeId, typeId }) => {
                 name="last_name" 
                 value={formData.last_name}
                 onChange={handleChange}
+                disabled
+                readOnly
               />
             </div>
             <div className="item">
@@ -228,13 +283,18 @@ const DeansListener = ({ studentTypeId, typeId }) => {
             </div>
             <div className="item">
               <span>Year Level</span>
-              <input 
+              <select 
                 className="input" 
                 type="text" 
                 name="year_level" 
                 value={formData.year_level}
                 onChange={handleChange}
-              />
+              >
+                <option value='1'>1st Year</option>
+                <option value='2'>2nd Year</option>
+                <option value='3'>3rd Year</option>
+                <option value='4'>4th Year</option>
+              </select>
             </div>
             <div className="item">
               <span>Course</span>
@@ -244,6 +304,8 @@ const DeansListener = ({ studentTypeId, typeId }) => {
                 name="program" 
                 value={formData.program}
                 onChange={handleChange}
+                disabled
+                readOnly
               />
             </div>
             <div className="item">
@@ -254,6 +316,8 @@ const DeansListener = ({ studentTypeId, typeId }) => {
                 name="email_address" 
                 value={formData.email_address}
                 onChange={handleChange}
+                disabled
+                readOnly
               />
             </div>
             <div className="item">
@@ -365,10 +429,19 @@ const DeansListener = ({ studentTypeId, typeId }) => {
           </div>
 
           <div className="form-actions">
-            <button onClick={handleSubmit}>Submit Application</button>
+            <button onClick={handleSubmit}>Submit Application</button>&nbsp;
+            <button type="button" onClick={() => setIsUploadPopupOpen(true)}>Add attachment</button>
           </div>
         </div>
       </div>
+
+      {isUploadPopupOpen && (
+        <DeansListFile 
+          studentTypeId={studentTypeId} 
+          typeId={typeId} 
+          onClose={() => setIsUploadPopupOpen(false)}
+        />
+      )}
     </div>
   );
 };

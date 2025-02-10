@@ -3,6 +3,7 @@ import { useEffect } from "react";
 // Components
 import StudentNavbar from "./components/navbar";
 import StudentScholarshipTypes from "./components/view/scholarship-types";
+import ValidateStudent from "../../validations/validate-student";
 
 // CSS
 import '../../assets/css/student/student.css';
@@ -15,6 +16,7 @@ const StudentHome = () => {
 
   return(
     <>
+      <ValidateStudent/>
       <div className="student-section">
         <div className="container">
           <StudentNavbar/>

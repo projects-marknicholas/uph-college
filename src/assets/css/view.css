@@ -32,6 +32,15 @@
   padding: 20px;
   border-radius: 12px;
 }
+.popup-overlay-file{
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--white);
+  padding: 12px;
+  border-radius: 12px;
+  height: 900px;
+}
 
 /* Entrance Application */
 .popup-overlay .entrance-application .ea-header{

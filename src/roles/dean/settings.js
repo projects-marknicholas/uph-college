@@ -7,7 +7,7 @@ import ProfileSettings from "./components/views/settings";
 
 const DeanSettings = () => {
   useEffect(() => {
-    document.title = 'Settings - Adviser';
+    document.title = 'Settings - Dean';
   }, []);
 
   return (

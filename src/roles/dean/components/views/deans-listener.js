@@ -1,6 +1,9 @@
 import React from "react";
 
 const DeansListener = ({ application, onClose }) => {
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
+  const pdfUrl = BASE_URL + '/' + application?.attachment;
+  
   return(
     <>
       <div className="popup-overlay">
@@ -14,50 +17,64 @@ const DeansListener = ({ application, onClose }) => {
               <h3>DEAN'S LISTENER APPLICATION FORM</h3>
             </div>
 
-            <div className="inputs">
-              <div className="item">
-                <span>Semester</span>
-                <div className="input">
-                  {application.semester || ''}
+            {application.attachment ? (
+              <div className="pdf-view">
+                <object
+                  data={pdfUrl}
+                  type="application/pdf"
+                  width="100%"
+                  height="600px"
+                  style={{ border: "none" }}
+                >
+                  <p>Your browser does not support PDFs. <a href={pdfUrl}>Download the PDF</a>.</p>
+                </object>
+              </div>
+            ) : (
+              <div className="inputs">
+                <div className="item">
+                  <span>Semester</span>
+                  <div className="input">
+                    {application.semester || ''}
+                  </div>
+                </div>
+                <div className="item">
+                  <span>Academic Year</span>
+                  <div className="input">
+                    {application.academic_year || ''}
+                  </div>
+                </div>
+                <div className="item">
+                  <span>Name</span>
+                  <div className="input">
+                    {application.first_name} {application.middle_name} {application.last_name}
+                  </div>
+                </div>
+                <div className="item">
+                  <span>Course</span>
+                  <div className="input">
+                    {application.program}
+                  </div>
+                </div>
+                <div className="item">
+                  <span>E-mail Address</span>
+                  <div className="input">
+                    {application.email_address}
+                  </div>
+                </div>
+                <div className="item">
+                  <span>Contact Number</span>
+                  <div className="input">
+                    {application.contact_number}
+                  </div>
+                </div>
+                <div className="item">
+                  <span>Date Applied</span>
+                  <div className="input">
+                    {application.created_at}
+                  </div>
                 </div>
               </div>
-              <div className="item">
-                <span>Academic Year</span>
-                <div className="input">
-                  {application.academic_year || ''}
-                </div>
-              </div>
-              <div className="item">
-                <span>Name</span>
-                <div className="input">
-                  {application.first_name} {application.middle_name} {application.last_name}
-                </div>
-              </div>
-              <div className="item">
-                <span>Course</span>
-                <div className="input">
-                  {application.program}
-                </div>
-              </div>
-              <div className="item">
-                <span>E-mail Address</span>
-                <div className="input">
-                  {application.email_address}
-                </div>
-              </div>
-              <div className="item">
-                <span>Contact Number</span>
-                <div className="input">
-                  {application.contact_number}
-                </div>
-              </div>
-              <div className="item">
-                <span>Date Applied</span>
-                <div className="input">
-                  {application.created_at}
-                </div>
-              </div>
-            </div>
+            )}
 
             <div className="subjects">
               {application.subjects && application.subjects.length > 0 ? (

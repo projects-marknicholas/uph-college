@@ -9,6 +9,8 @@ import ThePerpetualArchives from "./components/view/the-perpetual-archives";
 import PresidentialBoardDirectorScholar from "./components/view/presidential-board-director-scholar";
 import CollegeCouncilPresident from "./components/view/college-council-president";
 import SSCScholars from "./components/view/ssc-scholars";
+import ValidateStudent from "../../validations/validate-student";
+import PrivacyApproval from "../../validations/privacy-approval";
 
 // API
 import { fetchType } from "../../api/student";
@@ -60,6 +62,8 @@ const StudentForm = () => {
 
   return (
     <>
+      <PrivacyApproval/>
+      <ValidateStudent/>
       <div className="student-section">
         <div className="container">
           <StudentNavbar />

@@ -4,9 +4,9 @@ import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 
 // API
-import { insertFormAttachment } from '../../../../api/adviser';
+import { insertFormAttachment } from "../../../../api/admin";
 
-const SSCScholars = ({ application, onClose }) => {
+const CollegeCouncilPresident = ({ application, onClose }) => {
   const [attachment, setAttachment] = useState(null);
   const [studentNumber, setStudentNumber] = useState(''); 
   const [userId, setUserId] = useState('');
@@ -90,7 +90,7 @@ const SSCScholars = ({ application, onClose }) => {
         <div className="content">
           <div className="headers">
             <h1>SCHOLARSHIP PROGRAM</h1>
-            <h3>SSC SCHOLARS APPLICATION FORM</h3>
+            <h3>COLLEGE COUNCIL PRESIDENT APPLICATION FORM</h3>
           </div>
 
           <div className="inputs">
@@ -126,7 +126,7 @@ const SSCScholars = ({ application, onClose }) => {
               onChange={handleCheckboxChange}
             /> 
             <span>
-              By signing this <b>ssc scholars application form</b>, you hereby
+              By signing this <b>college council president application form</b>, you hereby
               allow/authorize UPH Calamba Campus and their authorized personnel
               to gather and process your personal information (name, address,
               and picture if applicable for documentation use){" "}
@@ -151,4 +151,4 @@ const SSCScholars = ({ application, onClose }) => {
   );
 };
 
-export default SSCScholars;
+export default CollegeCouncilPresident;

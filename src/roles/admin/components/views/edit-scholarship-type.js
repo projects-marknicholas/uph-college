@@ -104,7 +104,7 @@ const PopupEditScholarshipType = ({ togglePopup, fetchScholarshipTypes, data }) 
               ></textarea>
             </label><br />
             <label htmlFor="eligibility">
-              <span>Eligibility</span><br />
+              <span>Qualifications</span><br />
               <textarea
                 type="text"
                 id="eligibility"

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 // Components
 import StudentNavbar from "./components/navbar";
 import StudentStudentApplications from "./components/tables/student-applications";
+import ValidateStudent from "../../validations/validate-student";
 
 const StudentApplications = () => {
 
@@ -12,6 +13,7 @@ const StudentApplications = () => {
 
   return(
     <>
+      <ValidateStudent/>
       <div className="student-section">
         <div className="container">
           <StudentNavbar/>

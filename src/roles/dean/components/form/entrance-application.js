@@ -27,7 +27,7 @@ const EntranceApplication = ({ application, onClose }) => {
   });
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [studentFound, setStudentFound] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false); 
@@ -235,6 +235,8 @@ const EntranceApplication = ({ application, onClose }) => {
                   name="first_name"
                   value={formData.first_name}
                   onChange={handleChange}
+                  disabled
+                  readOnly
                 />
               </div>
               <div className="item">
@@ -246,6 +248,8 @@ const EntranceApplication = ({ application, onClose }) => {
                   name="middle_name"
                   value={formData.middle_name}
                   onChange={handleChange}
+                  disabled
+                  readOnly
                 />
               </div>
               <div className="item">
@@ -257,6 +261,8 @@ const EntranceApplication = ({ application, onClose }) => {
                   name="last_name"
                   value={formData.last_name}
                   onChange={handleChange}
+                  disabled
+                  readOnly
                 />
               </div>
               <div className="item">
@@ -268,6 +274,8 @@ const EntranceApplication = ({ application, onClose }) => {
                   name="program"
                   value={formData.program}
                   onChange={handleChange}
+                  disabled
+                  readOnly
                 />
               </div>
               <div className="item">
@@ -279,6 +287,8 @@ const EntranceApplication = ({ application, onClose }) => {
                   name="email_address"
                   value={formData.email_address}
                   onChange={handleChange}
+                  disabled
+                  readOnly
                 />
               </div>
               <div className="item">

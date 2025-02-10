@@ -20,7 +20,9 @@ export const endpoints = {
 
   addTypes: `${BASE_URL}/api/v1/type`,
   getTypes: `${BASE_URL}/api/v1/type`,
+  adminTypes: `${BASE_URL}/api/v1/types`,
   updateTypes: `${BASE_URL}/api/v1/type`,
+  adminAttachment: `${BASE_URL}/api/v1/attachment`,
 
   getScholarTypeCategory: `${BASE_URL}/api/v1/scholarship-type-category`,
 
@@ -59,7 +61,8 @@ export const endpoints = {
   studentAccount: `${BASE_URL}/api/v1/student/account`,
   updateStudentAccount: `${BASE_URL}/api/v1/student/account`,
   studentScholarshipTypes: `${BASE_URL}/api/v1/student/scholarship-types`,
-  studentTypes: `${BASE_URL}/api/v1/student/type`,
+  studentType: `${BASE_URL}/api/v1/student/type`,
+  studentTypes: `${BASE_URL}/api/v1/student/types`,
   studentEntranceApplication: `${BASE_URL}/api/v1/student/entrance-application`,
   studentDeansListener: `${BASE_URL}/api/v1/student/deans-list`,
   studentAttachment: `${BASE_URL}/api/v1/student/attachment`,

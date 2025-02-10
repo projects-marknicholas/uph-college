@@ -11,7 +11,7 @@ const PresidentialBoardDirectors = ({ application, onClose }) => {
   const [studentNumber, setStudentNumber] = useState(''); 
   const [userId, setUserId] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(true);
 
   useEffect(() => {
     const user = sessionStorage.getItem('user');

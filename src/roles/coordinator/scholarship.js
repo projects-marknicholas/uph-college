@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "./components/sidebar";
 import Navbar from "./components/navbar";
 import TableScholarship from "./components/tables/scholarship";
+import ValidateCoordinator from "../../validations/validate-coordinator";
 
 const CoordinatorScholarship = () => {
   useEffect(() => {
@@ -12,6 +13,7 @@ const CoordinatorScholarship = () => {
 
   return (
     <>
+      <ValidateCoordinator/>
       <div className="main-section">
         <Sidebar active='scholarships' />
 

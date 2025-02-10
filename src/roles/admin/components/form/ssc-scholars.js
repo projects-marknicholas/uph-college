@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 
 // API
-import { insertFormAttachment } from '../../../../api/adviser';
+import { insertFormAttachment } from "../../../../api/admin";
 
 const SSCScholars = ({ application, onClose }) => {
   const [attachment, setAttachment] = useState(null);

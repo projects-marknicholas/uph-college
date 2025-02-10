@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "./components/sidebar";
 import Navbar from "./components/navbar";
 import TableScholars from "./components/tables/scholars";
+import ValidateDean from "../../validations/validate-dean";
 
 const DeanScholars = () => {
   useEffect(() => {
@@ -12,6 +13,7 @@ const DeanScholars = () => {
 
   return (
     <>
+      <ValidateDean/>
       <div className="main-section">
         <Sidebar active='applications' />
 

@@ -3,21 +3,24 @@ import { useNavigate } from "react-router-dom";
 
 // Components
 import Swal from "sweetalert2";
+import EntranceApplicationFile from "./form/ea-file";
 
 // API
-import { insertEntranceApplication } from '../../../../api/student';
+import { insertEntranceApplication, fetchTypes } from '../../../../api/student';
 
 const EntranceApplication = ({ studentTypeId, typeId }) => {
   const navigate = useNavigate();
   const [currentDate, setCurrentDate] = useState("");
   const [userId, setUserId] = useState(['']);
+  const [curriculumYears, setCurriculumYears] = useState([]);
+  const [semesters, setSemesters] = useState([]);
   const [formData, setFormData] = useState({
     first_name: "",
     middle_name: "",
     last_name: "",
     suffix: "",
     academic_year: "",
-    year_level: "",
+    year_level: "1",
     semester: "1", 
     program: "",
     email_address: "",
@@ -27,7 +30,8 @@ const EntranceApplication = ({ studentTypeId, typeId }) => {
   });
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(true);
+  const [isUploadPopupOpen, setIsUploadPopupOpen] = useState(false);
 
   useEffect(() => {
     const user = sessionStorage.getItem('user');
@@ -66,6 +70,27 @@ const EntranceApplication = ({ studentTypeId, typeId }) => {
 
     formatDate();
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!typeId) return; 
+  
+      try {
+        const response = await fetchTypes({ tid: typeId });
+  
+        if (response.status === "success") {
+          setCurriculumYears(response.data || []);
+          setSemesters(response.data || []);
+        } else {
+          console.error("Failed to fetch curriculum years:", response.message);
+        }
+      } catch (error) {
+        console.error("Error fetching curriculum years:", error);
+      }
+    };
+  
+    fetchData();
+  }, [typeId]); 
 
   const handleChange = (e) => {
     setFormData({
@@ -137,21 +162,36 @@ const EntranceApplication = ({ studentTypeId, typeId }) => {
                   name="semester"
                   value={formData.semester}
                   onChange={handleChange}
+                  disabled
                 >
-                  <option value="1">1st</option>
-                  <option value="2">2nd</option>
+                  {semesters.length ? (
+                    semesters.map((sem) => (
+                      <option key={sem.semester} value={sem.semester}>
+                        {sem.semester === '1' ? "1st Semester" : sem.semester === '2' ? "2nd Semester" : sem.semester}
+                      </option>
+                    ))
+                  ) : (
+                    <option disabled>No available semesters</option>
+                  )}
                 </select>
               </div>
               <div className="item">
                 <span>Academic Year</span>
-                <input 
+                <select 
                   className="input"
-                  type="number"
                   id="academic_year"
                   name="academic_year"
                   value={formData.academic_year}
                   onChange={handleChange}
-                />
+                  disabled
+                > 
+                  <option disabled>Select Academic Year</option>
+                  {curriculumYears.map((year, index) => (
+                    <option key={index} value={year.curriculum_year}>
+                      {year.curriculum_year}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="item">
                 <span>First Name</span>
@@ -162,6 +202,8 @@ const EntranceApplication = ({ studentTypeId, typeId }) => {
                   name="first_name"
                   value={formData.first_name}
                   onChange={handleChange}
+                  disabled
+                  readOnly
                 />
               </div>
               <div className="item">
@@ -173,6 +215,8 @@ const EntranceApplication = ({ studentTypeId, typeId }) => {
                   name="middle_name"
                   value={formData.middle_name}
                   onChange={handleChange}
+                  disabled
+                  readOnly
                 />
               </div>
               <div className="item">
@@ -184,6 +228,8 @@ const EntranceApplication = ({ studentTypeId, typeId }) => {
                   name="last_name"
                   value={formData.last_name}
                   onChange={handleChange}
+                  disabled
+                  readOnly
                 />
               </div>
               <div className="item">
@@ -195,6 +241,8 @@ const EntranceApplication = ({ studentTypeId, typeId }) => {
                   name="program"
                   value={formData.program}
                   onChange={handleChange}
+                  disabled
+                  readOnly
                 />
               </div>
               <div className="item">
@@ -206,6 +254,8 @@ const EntranceApplication = ({ studentTypeId, typeId }) => {
                   name="email_address"
                   value={formData.email_address}
                   onChange={handleChange}
+                  disabled
+                  readOnly
                 />
               </div>
               <div className="item">
@@ -262,13 +312,22 @@ const EntranceApplication = ({ studentTypeId, typeId }) => {
             </div>
 
             <div className="form-actions">
-              <button onClick={handleSubmit}>Submit Application</button>
+              <button onClick={handleSubmit}>Submit Application</button>&nbsp;
+              <button type="button" onClick={() => setIsUploadPopupOpen(true)}>Add attachment</button>
             </div>
 
             {error && <div className="error">{error}</div>}
             {message && <div className="message">{message}</div>}
           </div>
         </div>
+
+        {isUploadPopupOpen && (
+          <EntranceApplicationFile 
+            studentTypeId={studentTypeId} 
+            typeId={typeId} 
+            onClose={() => setIsUploadPopupOpen(false)}
+          />
+        )}
       </div>
     </>
   );

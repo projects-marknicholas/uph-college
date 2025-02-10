@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "./components/sidebar";
 import Navbar from "./components/navbar";
 import TableReferrals from "./components/tables/referral";
+import ValidateDean from "../../validations/validate-dean";
 
 const DeanReferral = () => {
   useEffect(() => {
@@ -12,6 +13,7 @@ const DeanReferral = () => {
 
   return (
     <>
+      <ValidateDean/>
       <div className="main-section">
         <Sidebar active='applications' />
 

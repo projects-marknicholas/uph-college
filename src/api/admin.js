@@ -285,6 +285,54 @@ export const getType = async (type, page) => {
   }
 };
 
+export const getTypes = async ({ searchQuery = '', page }) => {
+  // Fetch the API key first
+  const securityKeyResponse = await fetchSecurityKey();
+  
+  if (securityKeyResponse.status === 'error') {
+    return { status: 'error', message: 'Failed to fetch API key.' };
+  }
+
+  const apiKey = securityKeyResponse.security_key;
+  const userData = JSON.parse(sessionStorage.getItem('user') || '{}');
+
+  if (!userData.user_id) {
+    return { status: 'error', message: 'User ID not found' };
+  }
+
+  const url = searchQuery
+    ? `${endpoints.adminTypes}?search=${searchQuery}&page=${page}&limit=10`
+    : `${endpoints.adminTypes}?page=${page}&limit=10`;
+
+  try {
+    if (!url) {
+      throw new Error('API endpoint is not defined');
+    }
+
+    const response = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': apiKey,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+
+    if (data.status === 'error') {
+      throw new Error(data.message);
+    }
+
+    return { status: 'success', data: data.data };
+  } catch (error) {
+    console.error('Error during fetching data:', error);
+    return { status: 'error', message: 'An error occurred while fetching data. Please try again.' };
+  }
+};
+
 export const updateType = async (typeId, formData) => {
   const securityKeyResponse = await fetchSecurityKey();
   
@@ -1096,3 +1144,39 @@ export const updateActiveAccount = async (userId, status) => {
     return { status: 'error', message: 'An error occurred while deleting the accounts. Please try again.' };
   }
 };
+
+
+
+
+export const insertFormAttachment = async ({ rid, sn, stid, tid, formData }) => {
+  // Fetch the API key first
+  const securityKeyResponse = await fetchSecurityKey();
+  
+  if (securityKeyResponse.status === 'error') {
+    return { status: 'error', message: 'Failed to fetch API key.' };
+  }
+
+  const apiKey = securityKeyResponse.security_key;
+  const url = `${endpoints.adminAttachment}?rid=${rid}&sn=${sn}&stid=${stid}&tid=${tid}`;
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': apiKey,
+      },
+      body: formData,
+    });
+
+    const data = await response.json();
+
+    if (data.status === 'success') {
+      return { status: 'success', message: data.message };
+    } else {
+      return { status: 'error', message: data.message };
+    }
+  } catch (error) {
+    console.error('Error during inserting data:', error);
+    return { status: 'error', message: 'An error occurred during inserting data. Please try again.' };
+  }
+}
