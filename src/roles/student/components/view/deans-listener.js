@@ -12,7 +12,7 @@ const DeansListener = ({ studentTypeId, typeId }) => {
   const navigate = useNavigate();
   const [subjects, setSubjects] = useState([]);
   const [currentDate, setCurrentDate] = useState("");
-  const [userId, setUserId] = useState(['']);
+  const [userId, setUserId] = useState('');
   const [curriculumYears, setCurriculumYears] = useState([]);
   const [semesters, setSemesters] = useState([]);
   const [formData, setFormData] = useState({
@@ -22,7 +22,7 @@ const DeansListener = ({ studentTypeId, typeId }) => {
     middle_name: "",
     last_name: "",
     suffix: "",
-    year_level: "1", 
+    year_level: "1",
     program: "",
     email_address: "",
     contact_number: "",
@@ -32,8 +32,19 @@ const DeansListener = ({ studentTypeId, typeId }) => {
   const [isChecked, setIsChecked] = useState(true);
   const [isUploadPopupOpen, setIsUploadPopupOpen] = useState(false);
 
-  // Getting the default user data
+  // Load saved data from localStorage on component mount
   useEffect(() => {
+    const savedFormData = localStorage.getItem('formData');
+    const savedSubjects = localStorage.getItem('subjects');
+
+    if (savedFormData) {
+      setFormData(JSON.parse(savedFormData));
+    }
+
+    if (savedSubjects) {
+      setSubjects(JSON.parse(savedSubjects));
+    }
+
     const user = sessionStorage.getItem('user');
     if (!user) {
       console.error("User not found in session storage");
@@ -54,6 +65,16 @@ const DeansListener = ({ studentTypeId, typeId }) => {
     }));
   }, []);
 
+  // Save formData to localStorage on every change
+  useEffect(() => {
+    localStorage.setItem('formData', JSON.stringify(formData));
+  }, [formData]);
+
+  // Save subjects to localStorage on every change
+  useEffect(() => {
+    localStorage.setItem('subjects', JSON.stringify(subjects));
+  }, [subjects]);
+
   // Date applied format
   useEffect(() => {
     const formatDate = () => {
@@ -72,9 +93,9 @@ const DeansListener = ({ studentTypeId, typeId }) => {
     formatDate();
   }, []);
 
-  // Add subject inputss
+  // Add subject inputs
   const handleAddSubject = () => {
-    setSubjects([
+    const newSubjects = [
       ...subjects,
       {
         subject_code: "",
@@ -82,32 +103,47 @@ const DeansListener = ({ studentTypeId, typeId }) => {
         name_of_instructor: "",
         grades: "",
       },
-    ]);
+    ];
+    setSubjects(newSubjects);
   };
 
+  // Handle subject input changes
   const handleSubjectChange = (index, field, value) => {
     const updatedSubjects = [...subjects];
     updatedSubjects[index][field] = value;
     setSubjects(updatedSubjects);
   };
 
+  // Remove subject
   const handleRemoveSubject = (index) => {
-    const updatedSubjects = [...subjects];
-    updatedSubjects.splice(index, 1);
-    setSubjects(updatedSubjects);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'This action will remove the subject.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, remove it!',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const updatedSubjects = [...subjects];
+        updatedSubjects.splice(index, 1);
+        setSubjects(updatedSubjects);
+        Swal.fire('Removed!', 'The subject has been removed.', 'success');
+      }
+    });
   };
 
+  // Fetch curriculum years and semesters
   useEffect(() => {
     const fetchData = async () => {
-      if (!typeId) return; 
-  
+      if (!typeId) return;
+
       try {
         const response = await fetchTypes({ tid: typeId });
-  
+
         if (response.status === "success") {
           setCurriculumYears(response.data || []);
           setSemesters(response.data || []);
-          // Set the default academic_year to the first item in curriculumYears
           if (response.data && response.data.length > 0) {
             setFormData((prevFormData) => ({
               ...prevFormData,
@@ -122,48 +158,50 @@ const DeansListener = ({ studentTypeId, typeId }) => {
         console.error("Error fetching curriculum years:", error);
       }
     };
-  
-    fetchData();
-  }, [typeId]); 
 
-  // Form data
+    fetchData();
+  }, [typeId]);
+
+  // Handle form input changes
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
   };
 
+  // Handle checkbox change
   const handleCheckboxChange = (e) => {
     setIsChecked(e.target.checked);
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (!isChecked) {
       Swal.fire("Warning!", "You must agree to the terms and conditions.", "warning");
       return;
     }
-  
+
     const payload = {
       ...formData,
       subjects: subjects.map(subject => ({
         subject_code: subject.subject_code,
         units: subject.units,
         name_of_instructor: subject.name_of_instructor,
-        grade: subject.grades, // Ensure the key matches 'grade' instead of 'grades'
+        grade: subject.grades,
       })),
     };
-  
-    // Call the insert function and pass the necessary data
+
     const response = await insertDeansListener({
       uid: userId,
       stid: studentTypeId,
       tid: typeId,
       formData: payload,
     });
-  
+
     if (response.status === "success") {
       Swal.fire('Success!', response.message, 'success');
       setFormData({
@@ -173,19 +211,21 @@ const DeansListener = ({ studentTypeId, typeId }) => {
         middle_name: "",
         last_name: "",
         suffix: "",
-        year_level: "1", 
+        year_level: "1",
         program: "",
         email_address: "",
         contact_number: "",
       });
-      setSubjects([]); // Clear subjects
+      setSubjects([]);
       setError(null);
+      localStorage.removeItem('formData'); // Clear saved form data
+      localStorage.removeItem('subjects'); // Clear saved subjects
       navigate('/student/applications');
     } else {
       Swal.fire('Error!', response.message, 'error');
       setMessage(null);
     }
-  };  
+  };
 
   return (
     <div className="popup-overlay">
@@ -345,65 +385,76 @@ const DeansListener = ({ studentTypeId, typeId }) => {
           </div>
 
           <div className="subjects">
-            {subjects.map((subject, index) => (
-              <div key={index} className="subject-item">
-                <div className="item">
-                  <span>Subject Code</span>
-                  <input
-                    className="input"
-                    type="text"
-                    value={subject.subject_code}
-                    onChange={(e) =>
-                      handleSubjectChange(index, "subject_code", e.target.value)
-                    }
-                  /><br/>
-                </div>
-                <div className="item">
-                  <span>Units</span>
-                  <input
-                    className="input"
-                    type="number"
-                    value={subject.units}
-                    onChange={(e) =>
-                      handleSubjectChange(index, "units", e.target.value)
-                    }
-                  />
-                </div><br/>
-                <div className="item">
-                  <span>Name of Instructor</span>
-                  <input
-                    className="input"
-                    type="text"
-                    value={subject.name_of_instructor}
-                    onChange={(e) =>
-                      handleSubjectChange(
-                        index,
-                        "name_of_instructor",
-                        e.target.value
-                      )
-                    }
-                  />
-                </div><br/>
-                <div className="item">
-                  <span>Grades</span>
-                  <input
-                    className="input"
-                    type="text"
-                    value={subject.grades}
-                    onChange={(e) =>
-                      handleSubjectChange(index, "grades", e.target.value)
-                    }
-                  />
-                </div><br/>
-                <button
-                  type="button"
-                  className="remove-button"
-                  onClick={() => handleRemoveSubject(index)}
-                >
-                  Remove Subject
-                </button>
-              </div>
-            ))}
+            <table>
+              <thead>
+                <tr>
+                  <th>Subject Code</th>
+                  <th>Units</th>
+                  <th>Name of Instructor</th>
+                  <th>Grades</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+              {subjects.map((subject, index) => (
+                <tr key={index}>
+                  <td>
+                    <input
+                      className="input"
+                      type="text"
+                      value={subject.subject_code}
+                      onChange={(e) =>
+                        handleSubjectChange(index, "subject_code", e.target.value)
+                      }
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="input"
+                      type="number"
+                      value={subject.units}
+                      onChange={(e) =>
+                        handleSubjectChange(index, "units", e.target.value)
+                      }
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="input"
+                      type="text"
+                      value={subject.name_of_instructor}
+                      onChange={(e) =>
+                        handleSubjectChange(
+                          index,
+                          "name_of_instructor",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="input"
+                      type="text"
+                      value={subject.grades}
+                      onChange={(e) =>
+                        handleSubjectChange(index, "grades", e.target.value)
+                      }
+                    />
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      className="remove-button"
+                      onClick={() => handleRemoveSubject(index)}
+                    >
+                      Remove Subject
+                    </button>
+                  </td>
+                </tr>
+              ))}
+              </tbody>
+            </table>
           </div>
 
           <div className="privacy">

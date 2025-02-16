@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // CSS
@@ -8,7 +8,7 @@ import '../../../../assets/css/student/account.css';
 import Swal from 'sweetalert2';
 
 // API
-import { userAccount, updateUserAccount, getDepartment, getProgram } from '../../../../api/adviser';
+import { userAccount, updateUserAccount, getOrganizations } from '../../../../api/adviser';
 
 const ProfileSettings = () => {
   const navigate = useNavigate();
@@ -16,11 +16,9 @@ const ProfileSettings = () => {
     first_name: '',
     middle_name: '',
     last_name: '',
-    department: '',
-    program: '',
+    organization: ''
   });
-  const [departments, setDepartments] = useState([]);
-  const [programs, setPrograms] = useState([]);
+  const [organizations, setOrganizations] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,19 +38,12 @@ const ProfileSettings = () => {
             first_name: user.first_name || '',
             middle_name: user.middle_name || '',
             last_name: user.last_name || '',
-            department: user.department || '',
-            program: user.program || '',
+            organization: user.organization || ''
           });
 
-          // Fetch programs based on user department
-          fetchPrograms(user.department);
+          fetchOrganizations('bb32127037342ec9c79ac4a49ac58b99');
         } else {
           console.error(response.message);
-        }
-
-        const departmentResponse = await getDepartment({ searchQuery: '', page: 1 });
-        if (departmentResponse.status === 'success') {
-          setDepartments(departmentResponse.data);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -62,27 +53,16 @@ const ProfileSettings = () => {
     fetchData();
   }, []);
 
-  const fetchPrograms = async (department) => {
+  const fetchOrganizations = async (stid) => {
     try {
-      const programResponse = await getProgram({ searchQuery: department, page: 1 });
-      if (programResponse.status === 'success') {
-        setPrograms(programResponse.data);
-      } else {
-        setPrograms([]);
-      }
-    } catch (error) {
-      console.error("Error fetching programs:", error);
-    }
+      const response = await getOrganizations({ stid });
+      if (response.status === 'success') setOrganizations(response.data);
+    } catch (error) { console.error(error); }
   };
 
   const handleInputChange = async (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
-
-    // Fetch programs when department changes
-    if (name === 'department') {
-      fetchPrograms(value);
-    }
   };
 
   const handleFormSubmit = async (e) => {
@@ -155,34 +135,17 @@ const ProfileSettings = () => {
               </label>
             </div>
             <div className="form-group">
-              <label htmlFor="department">
-                <span>College Department</span><br />
+              <label htmlFor="organization">
+                <span>Organization</span><br />
                 <select
-                  name="department"
-                  value={formData.department}
+                  name="organization"
+                  value={formData.organization}
                   onChange={handleInputChange}
                 >
-                  <option value="">Select Department</option>
-                  {departments.map((dept) => (
-                    <option key={dept.department_id} value={dept.department_name}>
-                      {dept.department_name}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            </div>
-            <div className="form-group">
-              <label htmlFor="program">
-                <span>College Program</span><br />
-                <select
-                  name="program"
-                  value={formData.program}
-                  onChange={handleInputChange}
-                >
-                  <option value="">Select Program</option>
-                  {programs.map((prog) => (
-                    <option key={prog.program_id} value={prog.program_name}>
-                      {prog.program_name}
+                  <option value="">Select Organization</option>
+                  {organizations.map((org) => (
+                    <option key={org.id} value={org.type_id}>
+                      {org.type}
                     </option>
                   ))}
                 </select>

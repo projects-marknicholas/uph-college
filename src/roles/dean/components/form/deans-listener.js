@@ -91,9 +91,21 @@ const DeansListener = ({ application, onClose }) => {
   };
 
   const handleRemoveSubject = (index) => {
-    const updatedSubjects = [...subjects];
-    updatedSubjects.splice(index, 1);
-    setSubjects(updatedSubjects);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'This action will remove the subject.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, remove it!',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const updatedSubjects = [...subjects];
+        updatedSubjects.splice(index, 1);
+        setSubjects(updatedSubjects);
+        Swal.fire('Removed!', 'The subject has been removed.', 'success');
+      }
+    });
   };
 
   // Handle search input change
@@ -362,65 +374,78 @@ const DeansListener = ({ application, onClose }) => {
 
         {studentFound && (
           <div className="subjects">
-            {subjects.map((subject, index) => (
-              <div key={index} className="subject-item">
-                <div className="item">
-                  <span>Subject Code</span>
-                  <input
-                    className="input"
-                    type="text"
-                    value={subject.subject_code}
-                    onChange={(e) =>
-                      handleSubjectChange(index, "subject_code", e.target.value)
-                    }
-                  /><br/>
-                </div>
-                <div className="item">
-                  <span>Units</span>
-                  <input
-                    className="input"
-                    type="number"
-                    value={subject.units}
-                    onChange={(e) =>
-                      handleSubjectChange(index, "units", e.target.value)
-                    }
-                  />
-                </div><br/>
-                <div className="item">
-                  <span>Name of Instructor</span>
-                  <input
-                    className="input"
-                    type="text"
-                    value={subject.name_of_instructor}
-                    onChange={(e) =>
-                      handleSubjectChange(
-                        index,
-                        "name_of_instructor",
-                        e.target.value
-                      )
-                    }
-                  />
-                </div><br/>
-                <div className="item">
-                  <span>Grades</span>
-                  <input
-                    className="input"
-                    type="text"
-                    value={subject.grades}
-                    onChange={(e) =>
-                      handleSubjectChange(index, "grades", e.target.value)
-                    }
-                  />
-                </div><br/>
-                <button
-                  type="button"
-                  className="remove-button"
-                  onClick={() => handleRemoveSubject(index)}
-                >
-                  Remove Subject
-                </button>
-              </div>
-            ))}
+            <table>
+              <thead>
+                <tr>
+                  <th>Subject Code</th>
+                  <th>Units</th>
+                  <th>Name of Instructor</th>
+                  <th>Grades</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {subjects.length > 0 ? (
+                  subjects.map((subject, index) => (
+                    <tr key={index}>
+                      <td>
+                        <input
+                          className="input"
+                          type="text"
+                          value={subject.subject_code}
+                          onChange={(e) =>
+                            handleSubjectChange(index, "subject_code", e.target.value)
+                          }
+                        />
+                      </td>
+                      <td>
+                        <input
+                          className="input"
+                          type="number"
+                          value={subject.units}
+                          onChange={(e) =>
+                            handleSubjectChange(index, "units", e.target.value)
+                          }
+                        />
+                      </td>
+                      <td>
+                        <input
+                          className="input"
+                          type="text"
+                          value={subject.name_of_instructor}
+                          onChange={(e) =>
+                            handleSubjectChange(index, "name_of_instructor", e.target.value)
+                          }
+                        />
+                      </td>
+                      <td>
+                        <input
+                          className="input"
+                          type="text"
+                          value={subject.grades}
+                          onChange={(e) =>
+                            handleSubjectChange(index, "grades", e.target.value)
+                          }
+                        />
+                      </td>
+                      <td>
+                        <button
+                          type="button"
+                          className="remove-button"
+                          onClick={() => handleRemoveSubject(index)}
+                        >
+                          Remove Subject
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="5" style={{ textAlign: "center" }}>No subjects available</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
           </div>
         )}
 

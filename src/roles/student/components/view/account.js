@@ -16,11 +16,11 @@ const StudentStudentAccount = () => {
     first_name: '',
     middle_name: '',
     last_name: '',
+    suffix: '',
     student_number: '',
-    place_of_birth: '',
-    date_of_birth: '',
     department: '',
     program: '',
+    year_level: '',
   });
   const [departments, setDepartments] = useState([]);
   const [programs, setPrograms] = useState([]);
@@ -43,11 +43,11 @@ const StudentStudentAccount = () => {
             first_name: user.first_name || '',
             middle_name: user.middle_name || '',
             last_name: user.last_name || '',
+            suffix: user.suffix || '',
             student_number: user.student_number || '',
-            place_of_birth: user.place_of_birth || '',
-            date_of_birth: user.date_of_birth || '',
             department: user.department || '',
             program: user.program || '',
+            year_level: user.year_level || '',
           });
 
           // Fetch programs based on user department
@@ -161,6 +161,18 @@ const StudentStudentAccount = () => {
               </label>
             </div>
             <div className="form-group">
+              <label htmlFor="suffix">
+                <span>Suffix</span><br />
+                <input
+                  type="text"
+                  id="suffix"
+                  name="suffix"
+                  value={formData.suffix}
+                  onChange={handleInputChange}
+                />
+              </label>
+            </div>
+            <div className="form-group">
               <label htmlFor="student_number">
                 <span>Student Number</span><br />
                 <input
@@ -168,30 +180,6 @@ const StudentStudentAccount = () => {
                   id="student_number"
                   name="student_number"
                   value={formData.student_number}
-                  onChange={handleInputChange}
-                />
-              </label>
-            </div>
-            <div className="form-group">
-              <label htmlFor="place_of_birth">
-                <span>Place of Birth</span><br />
-                <input
-                  type="text"
-                  id="place_of_birth"
-                  name="place_of_birth"
-                  value={formData.place_of_birth}
-                  onChange={handleInputChange}
-                />
-              </label>
-            </div>
-            <div className="form-group">
-              <label htmlFor="date_of_birth">
-                <span>Date of Birth</span><br />
-                <input
-                  type="date"
-                  id="date_of_birth"
-                  name="date_of_birth"
-                  value={formData.date_of_birth}
                   onChange={handleInputChange}
                 />
               </label>
@@ -227,6 +215,23 @@ const StudentStudentAccount = () => {
                       {prog.program_name}
                     </option>
                   ))}
+                </select>
+              </label>
+            </div>
+            <div className="form-group">
+              <label htmlFor="year_level">
+                <span>Year Level</span><br />
+                <select
+                  name="year_level"
+                  value={formData.year_level}
+                  onChange={handleInputChange}
+                >
+                  <option value="">Select Year Level</option>
+                  <option value="1">1st Year</option>
+                  <option value="2">2nd Year</option>
+                  <option value="3">3rd Year</option>
+                  <option value="4">4th Year</option>
+                  <option value="5">5th Year</option>
                 </select>
               </label>
             </div>

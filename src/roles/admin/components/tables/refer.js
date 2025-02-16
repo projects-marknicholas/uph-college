@@ -8,7 +8,7 @@ import ValidateUser from "../../../../validations/validate-user";
 import ViewApplication from "../form/application";
 
 // API
-import { getTypes } from "../../../../api/admin";
+import { getScholarshipTypeByCategory } from "../../../../api/admin"; 
 
 // CSS
 import '../../../../assets/css/table.css';
@@ -21,35 +21,38 @@ const TableReferrals = () => {
   const [hasMore, setHasMore] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedApplication, setSelectedApplication] = useState(null);
-  
-  // Fetch data based on search query and pagination
-  const fetchData = async (searchQuery, page) => {
+
+  // Fetch data based on category and pagination
+  const fetchData = async (category = 'External', page) => {
     setLoading(true);
+    setError(null); // Clear previous errors
+
     try {
-      const result = await getTypes({ searchQuery, page });
-  
+      const result = await getScholarshipTypeByCategory(category, page);
+
       if (result.status === 'success') {
         setData(prevData => page === 1 ? result.data : [...prevData, ...result.data]);
-        setHasMore(result.data.length >= 10);
+        setHasMore(result.data.length >= 50); // Assuming 50 is the limit per page
       } else {
-        setError(result.message);
+        setError(result.message || "Failed to fetch data.");
       }
     } catch (err) {
-      setError("An error occurred while fetching data.");
+      console.error("Error during fetching types:", err);
+      setError("An error occurred while fetching data. Please try again.");
     } finally {
       setLoading(false);
     }
-  };  
+  };
 
   useEffect(() => {
-    fetchData(searchQuery, page);
-  }, [page, searchQuery]);
+    fetchData('External', page); // Default category is 'External'
+  }, [page]);
 
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
     setPage(1);
-    setHasMore(true); 
+    setHasMore(true);
   };
 
   const loadMore = () => {
@@ -68,11 +71,11 @@ const TableReferrals = () => {
 
   return (
     <>
-      <ValidateUser/>
+      <ValidateUser />
       <div className="table-holder">
         <div className="table-header">
           <div className="table-btns">
-            
+            {/* Buttons can be added here */}
           </div>
           <div className="search-bar">
             <svg
@@ -102,10 +105,7 @@ const TableReferrals = () => {
           <table>
             <thead>
               <tr>
-                <th>Applied Scholarship</th>
                 <th>Type</th>
-                <th>Status</th>
-                <th>Date Submitted</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -113,13 +113,10 @@ const TableReferrals = () => {
               {data.length > 0 ? (
                 data.map((row, index) => (
                   <tr key={index}>
-                    <td>External</td>
                     <td>{row.type}</td>
-                    <td>{row.status}</td>
-                    <td>{row.created_at}</td>
                     <td className="action-field">
                       <button className="view" onClick={() => handleViewApplication(row)}>
-                        <img src={ViewSvg} alt="View" /> View
+                        <img src={ViewSvg} alt="View" /> Refer
                       </button>
                     </td>
                   </tr>
@@ -152,9 +149,9 @@ const TableReferrals = () => {
       </div>
 
       {selectedApplication && (
-        <ViewApplication 
-          application={selectedApplication} 
-          onClose={closeView} 
+        <ViewApplication
+          application={selectedApplication}
+          onClose={closeView}
         />
       )}
     </>

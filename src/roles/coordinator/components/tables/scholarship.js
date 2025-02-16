@@ -26,7 +26,14 @@ const TableScholarship = () => {
   const fetchData = async (searchQuery, page) => {
     setLoading(true);
     try {
-      const result = await getTypes({ searchQuery, page });
+      const user = sessionStorage.getItem('user');
+      if (!user) {
+        console.error("User not found in session storage");
+        return;
+      }
+
+      const userData = JSON.parse(user);
+      const result = await getTypes({ searchQuery, page, user_id: userData.user_id });
   
       if (result.status === 'success') {
         setData(prevData => page === 1 ? result.data : [...prevData, ...result.data]);

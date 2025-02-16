@@ -77,38 +77,32 @@ const DeansListener = ({ application, onClose }) => {
             )}
 
             <div className="subjects">
-              {application.subjects && application.subjects.length > 0 ? (
-                application.subjects.map((subject, index) => (
-                  <div className="subject-item" key={index}>
-                    <div className="item">
-                      <span>Subject Code</span>
-                      <div className="input">
-                        {subject.subject_code}
-                      </div><br/>
-                    </div>
-                    <div className="item">
-                      <span>Units</span>
-                      <div className="input">
-                        {subject.units}
-                      </div><br/>
-                    </div>
-                    <div className="item">
-                      <span>Instructor</span>
-                      <div className="input">
-                        {subject.name_of_instructor}
-                      </div><br/>
-                    </div>
-                    <div className="item">
-                      <span>Grade</span>
-                      <div className="input">
-                        {parseFloat(subject.grade).toFixed(2)}
-                      </div><br/>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="item">No subjects available</div>
-              )}
+              <table>
+                <thead>
+                  <tr>
+                    <th>Subject Code</th>
+                    <th>Units</th>
+                    <th>Name of Instructor</th>
+                    <th>Grades</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {application.subjects && application.subjects.length > 0 ? (
+                  application.subjects.map((subject, index) => (
+                    <tr key={index}>
+                      <td>{subject.subject_code}</td>
+                      <td>{subject.units}</td>
+                      <td>{subject.name_of_instructor}</td>
+                      <td>{parseFloat(subject.grade).toFixed(2)}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="4" style={{ textAlign: "center" }}>No subjects available</td>
+                  </tr>
+                )}
+                </tbody>
+              </table>
             </div>
 
             <div className="privacy">

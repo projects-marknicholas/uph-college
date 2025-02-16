@@ -11,6 +11,7 @@ import PresidentialDirectors from './presidential-directors';
 import CouncilPresidents from './council-presidents';
 import PerpetualiteArchives from './perpetualite-archives';
 import SupremeStudentCouncil from './supreme-student-council';
+import External from './external';
 
 // CSS
 import '../../../../assets/css/view.css';
@@ -39,7 +40,7 @@ const ViewApplication = ({ application, onClose }) => {
       case 'Private':
         return <Private application={application} onClose={onClose} />;
       default:
-        return <div>Form type not recognized.</div>;
+        return <External application={application} onClose={onClose} />;
     }
   };
 

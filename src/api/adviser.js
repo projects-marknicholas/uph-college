@@ -60,6 +60,38 @@ export const userAccount = async ({ uid }) => {
   }
 };
 
+export const getOrganizations = async ({ stid }) => {
+  // Fetch the API key first
+  const securityKeyResponse = await fetchSecurityKey();
+  
+  if (securityKeyResponse.status === 'error') {
+    return { status: 'error', message: 'Failed to fetch API key.' };
+  }
+
+  const apiKey = securityKeyResponse.security_key;
+  const url = `${endpoints.adviserOrganization}?stid=${stid}`;
+
+  try{
+    const response = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': apiKey,
+      },
+    });
+
+    const data = await response.json();
+
+    if (data.status === 'error') {
+      throw new Error(data.message);
+    }
+
+    return { status: 'success', data: data.data };
+  } catch (error) {
+    console.error('Error during fetching data:', error);
+    return { status: 'error', message: 'An error occurred while fetching data. Please try again.' };
+  }
+};
+
 export const updateUserAccount = async ({ uid, ...formData }) => {
   // Fetch the API key first
   const securityKeyResponse = await fetchSecurityKey();
@@ -94,7 +126,7 @@ export const updateUserAccount = async ({ uid, ...formData }) => {
   }
 };
 
-export const getTypes = async ({ searchQuery = '', page }) => {
+export const getTypes = async ({ searchQuery = '', page, user_id }) => {
   // Fetch the API key first
   const securityKeyResponse = await fetchSecurityKey();
   
@@ -110,8 +142,8 @@ export const getTypes = async ({ searchQuery = '', page }) => {
   }
 
   const url = searchQuery
-    ? `${endpoints.adviserTypes}?search=${searchQuery}&page=${page}&limit=10`
-    : `${endpoints.adviserTypes}?page=${page}&limit=10`;
+    ? `${endpoints.adviserTypes}?uid=${user_id}&search=${searchQuery}&page=${page}&limit=10`
+    : `${endpoints.adviserTypes}?uid=${user_id}&page=${page}&limit=10`;
 
   try {
     if (!url) {

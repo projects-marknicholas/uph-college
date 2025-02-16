@@ -6,16 +6,12 @@ const PrivacyApproval = () => {
   const navigate = useNavigate(); 
 
   const handlePrivacyAlert = () => {
-    // Check if privacy is already approved
     const privacyApproved = localStorage.getItem('privacyApproved');
-    
-    // If already approved, skip showing the alert
-    if (privacyApproved === 'true') {
-      return;
-    }
+    if (privacyApproved === 'true') return;
 
     Swal.fire({
       title: 'Do you approve the privacy statement?',
+      html: `By clicking "Approve", you authorize UPH Calamba Campus to collect and process your personal information (e.g., name, address, and photo for documentation) for the scholarship program. All data will be kept secure for five (5) years from the date of collection and will be deleted thereafter, in accordance with Republic Act 10173 (Data Privacy Act of 2012).`,
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Approve',
@@ -25,13 +21,12 @@ const PrivacyApproval = () => {
         localStorage.setItem('privacyApproved', 'true');
         Swal.fire({
           title: 'Privacy Statement Approved',
-          text: 'You have approved the privacy statement.',
           icon: 'success',
           confirmButtonText: 'OK',
         });
       } else if (result.isDismissed) {
-        localStorage.setItem('privacyApproved', 'false'); 
-        navigate('/student'); // Redirect to /student only if declined
+        localStorage.setItem('privacyApproved', 'false');
+        navigate('/student');
       }
     });
   };
@@ -40,7 +35,7 @@ const PrivacyApproval = () => {
     handlePrivacyAlert(); 
   }, []);
 
-  return null; // No UI is displayed
+  return null;
 };
 
 export default PrivacyApproval;

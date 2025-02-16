@@ -6,6 +6,7 @@ import SSCScholars from './ssc-scholars';
 import CollegeCouncilPresident from './college-council-presidents';
 import PresidentialBoardDirectors from './pbds';
 import ThePerpetualArchives from './the-perpetual-archives';
+import External from './external';
 
 // CSS
 import '../../../../assets/css/view.css';
@@ -24,7 +25,7 @@ const ViewApplication = ({ application, onClose }) => {
       case `The Perpetual Archives`:
         return <ThePerpetualArchives application={application} onClose={onClose} />;
       default:
-        return <div>Form type not recognized.</div>;
+        return <External application={application} onClose={onClose} />;
     }
   };
 

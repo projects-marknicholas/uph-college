@@ -95,4 +95,5 @@ export const endpoints = {
   adviserStudents: `${BASE_URL}/api/v1/adviser/students`,
   adviserDepartment: `${BASE_URL}/api/v1/adviser/department`,
   adviserProgram: `${BASE_URL}/api/v1/adviser/program`,
+  adviserOrganization: `${BASE_URL}/api/v1/adviser/type`,
 };

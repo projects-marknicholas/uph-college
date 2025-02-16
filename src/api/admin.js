@@ -367,7 +367,7 @@ export const updateType = async (typeId, formData) => {
 };
 
 // Scholarship Type by Category
-export const getScholarshipTypeByCategory = async (category, page) => {
+export const getScholarshipTypeByCategory = async (category = 'External', page) => {
   // Fetch the API key first
   const securityKeyResponse = await fetchSecurityKey();
   
@@ -1144,8 +1144,6 @@ export const updateActiveAccount = async (userId, status) => {
     return { status: 'error', message: 'An error occurred while deleting the accounts. Please try again.' };
   }
 };
-
-
 
 
 export const insertFormAttachment = async ({ rid, sn, stid, tid, formData }) => {
